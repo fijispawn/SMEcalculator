@@ -1,0 +1,26 @@
+#root{
+  background: var(--background);
+  color: var(--font-color);
+  transition: background-color 600ms linear;
+}
+
+
+.content__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  height: 100%;
+  top: 0;
+}
+
+.app__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap:20px;
+}

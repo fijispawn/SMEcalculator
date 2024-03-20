@@ -1,0 +1,15 @@
+.user__info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px !important;;
+  }
+
+  .license__info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
+    font-size: 14px;
+  }

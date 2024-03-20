@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+#root[data-theme="light"] {
+  --background: linear-gradient(
+    155deg,
+    rgba(243, 230, 221, 1) 50%,
+    rgba(253, 119, 112, 1) 100%
+  );
+  --font-color: #3c3c3c;
+  --background-color: #fd7770;
+  --account-container: white;
+  --content-container: white;
+  --input-color: #3c3c3c;
+  --header-font: white;
+  --modal-shadow: #646464;
+  --modal-border:#f6e9e0;
+}
+
+#root[data-theme="dark"] {
+  --background: linear-gradient(
+    155deg,
+    rgba(101, 101, 101, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  --font-color: #f6e9e0;
+  --background-color: #3c3c3c;
+  --account-container: #272727;
+  --content-container: #3c3c3c;
+  --input-color: #f6e9e0;
+  --header-font: #f6e9e0;
+  --modal-shadow: #272727;
+  --modal-border:#272727;
+}
+
+html {
+  height: 100%;
+}
+
+a {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+button {
+  background-color: #fd7770;
+  border-radius: 30px !important;
+  padding: 10px;
+  width: 100%;
+  color: white;
+}
+
+input {
+  display: block;
+  background-color: transparent;
+  height: 40px;
+}
+
+input:focus {
+  outline: none;
+}

@@ -1,0 +1,14 @@
+.form{
+    display: flex;
+    min-height: 400px;
+    min-width: 400px;
+    max-width: 400px;
+    flex-direction: column;
+    background-color: var(--content-container);
+    transition: background-color 400ms linear;
+    padding:10%;
+    border-radius: 30px;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}

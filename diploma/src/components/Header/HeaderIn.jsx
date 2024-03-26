@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import Avatar from "../../assets/avatar.svg";
@@ -23,6 +23,35 @@ const HeaderIn = () => {
   };
 
   const [modalActive, setModalActive] = useState(false);
+  const [userInfo, setUserInfo] = useState({}); 
+
+  useEffect(() => {
+    const updateAccountInfo = async () => {
+      try {
+        const response = await fetch('https://enterpizemate.dyzoon.dev/api/registration/account-info/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userInfo), 
+          credentials: 'include' 
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log(data); 
+
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    };
+
+    updateAccountInfo();
+  }, [userInfo]); 
+
 
   return (
     <div className="header">

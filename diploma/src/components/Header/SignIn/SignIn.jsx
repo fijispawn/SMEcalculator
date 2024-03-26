@@ -41,14 +41,13 @@ const SignIn = () => {
       const loginData = await loginResponse.json();
 
       if (loginResponse.ok) {
-        localStorage.setItem("userLogin", formData.login); // Save login here
+        localStorage.setItem("userLogin", formData.login); 
 
-        // Step 3: Perform GET Request (Adjust URL as needed)
         const userDetailResponse = await fetch(
           'https://enterpizemate.dyzoon.dev/api/registration/account-info/',
           {
             method: "GET",
-            credentials: "include", // Include cookies if needed
+            credentials: "include", 
             headers: {}, 
           }
         );

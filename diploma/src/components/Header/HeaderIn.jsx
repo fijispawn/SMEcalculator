@@ -23,35 +23,31 @@ const HeaderIn = () => {
   };
 
   const [modalActive, setModalActive] = useState(false);
-  const [userInfo, setUserInfo] = useState({}); 
-
+  const [userInfo, setUserInfo] = useState({});
+  const [reloadTrigger, setReloadTrigger] = useState(false);
+  
   useEffect(() => {
-    const updateAccountInfo = async () => {
+    const fetchAccountInfo = async () => {
       try {
-        const response = await fetch('https://enterpizemate.dyzoon.dev/api/registration/account-info/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userInfo), 
-          credentials: 'include' 
-        });
-
+        const response = await fetch(
+          "https://enterpizemate.dyzoon.dev/api/registration/account-info/",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const data = await response.json();
-        console.log(data); 
-
+        setUserInfo(data);
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error("Failed to fetch user info:", error);
       }
     };
 
-    updateAccountInfo();
-  }, [userInfo]); 
-
+    fetchAccountInfo();
+  }, [reloadTrigger]);
 
   return (
     <div className="header">

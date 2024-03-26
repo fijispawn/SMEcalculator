@@ -28,7 +28,7 @@ const SignIn = () => {
     try {
       // Step 1: Login
       const loginResponse = await fetch(
-        "http://localhost:8080/api/registration/login-user",
+        "https://enterpizemate.dyzoon.dev/api/registration/login-user",
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ const SignIn = () => {
 
         // Step 3: Perform GET Request (Adjust URL as needed)
         const userDetailResponse = await fetch(
-          'http://localhost:8080/api/registration/account-info/',
+          'https://enterpizemate.dyzoon.dev/api/registration/account-info/',
           {
             method: "GET",
             credentials: "include", // Include cookies if needed

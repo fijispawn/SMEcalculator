@@ -24,7 +24,7 @@ const Account = () => {
   
     const updatedData = { ...form, login: userLogin };
   
-    fetch("http://localhost:8080/api/registration/account-info/update", {
+    fetch("https://enterpizemate.dyzoon.dev/api/registration/account-info/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const Account = () => {
         setUserInfo(data);
         setIsEditing(false); 
       } else {
-        return fetch(`http://localhost:8080/api/registration/account-info/${userLogin}`)
+        return fetch(`https://enterpizemate.dyzoon.dev/api/registration/account-info/${userLogin}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);

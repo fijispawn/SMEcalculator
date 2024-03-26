@@ -20,10 +20,51 @@ const Account = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
-    setUserInfo(form);
-    setIsEditing(false);
+    const userLogin = localStorage.getItem("userLogin"); 
+  
+    const updatedData = { ...form, login: userLogin };
+  
+    fetch("http://localhost:8080/api/registration/account-info/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+      credentials: 'include', // Include cookies with the request
+
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+
+      if (data) {
+        setUserInfo(data);
+        setIsEditing(false); 
+      } else {
+        return fetch(`http://localhost:8080/api/registration/account-info/${userLogin}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((userData) => {
+            setUserInfo(userData);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    });
   };
+  
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -42,16 +83,19 @@ const Account = () => {
             <span>Название предприятия: {userInfo.company}</span>
             <span>Доход с начала года (в руб): {userInfo.income}</span>
           </div>
-          <button onClick={handleEditClick}>
-            Изменить 
-          </button>
+          <button onClick={handleEditClick}>Изменить</button>
         </>
       );
     } else {
       return (
         <>
           <span>Отсутствует информация о пользователе</span>
-          <button className="flex justify-center items-center gap-1" onClick={handleEditClick}><MdEdit/> Изменить</button>
+          <button
+            className="flex justify-center items-center gap-1"
+            onClick={handleEditClick}
+          >
+            <MdEdit /> Изменить
+          </button>
         </>
       );
     }
@@ -89,7 +133,7 @@ const Account = () => {
                 value={form.income}
                 placeholder="Доход с начала года (в руб)"
               />
-              <button type="submit">Сохранить</button>
+              <button>Сохранить</button>
             </form>
           </div>
         )}

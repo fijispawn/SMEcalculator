@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from '../Form.module.css';
-import { useAuth } from '../../../hooks/AuthContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../Form.module.css";
+import { useAuth } from "../../../hooks/AuthContext";
 
 const SignIn = () => {
   const { setLoggedIn } = useAuth();
   const [formData, setFormData] = useState({
-    login: '',
-    password: '',
+    login: "",
+    password: "",
   });
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Add this line to track loading state
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -23,28 +23,54 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Set loading to true when request starts
-    try {
-      const response = await fetch('http://localhost:8080/api/registration/login-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    setIsLoading(true);
 
-      const data = await response.json();
-      if (response.ok) {
+    try {
+      // Step 1: Login
+      const loginResponse = await fetch(
+        "http://localhost:8080/api/registration/login-user",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const loginData = await loginResponse.json();
+
+      if (loginResponse.ok) {
+        localStorage.setItem("userLogin", formData.login); // Save login here
+
+        // Step 3: Perform GET Request (Adjust URL as needed)
+        const userDetailResponse = await fetch(
+          'http://localhost:8080/api/registration/account-info/',
+          {
+            method: "GET",
+            credentials: "include", // Include cookies if needed
+            headers: {}, 
+          }
+        );
+
+        if (!userDetailResponse.ok) {
+          throw new Error("Failed to fetch user details.");
+        }
+
+        const userDetails = await userDetailResponse.json();
+
         setLoggedIn(true);
-        navigate('/account');
+        navigate("/account");
       } else {
-        setError(data.message || 'Неправильный логин или пароль. Попробуйте снова');
+        setError(
+          loginData.message || "Неправильный логин или пароль. Попробуйте снова"
+        );
       }
     } catch (error) {
-      console.error('Sign-in error:', error);
-      setError('An error occurred. Please try again later.');
+      console.error("Sign-in or user details fetch error:", error);
+      setError("An error occurred. Please try again later.");
     } finally {
-      setIsLoading(false); // Set loading to false when request is completed
+      setIsLoading(false);
     }
   };
 
@@ -62,7 +88,7 @@ const SignIn = () => {
             value={formData.login}
             onChange={handleChange}
             required
-            disabled={isLoading} // Disable input fields when loading
+            disabled={isLoading}
           />
         </div>
         <div>
@@ -74,11 +100,11 @@ const SignIn = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            disabled={isLoading} // Disable input fields when loading
+            disabled={isLoading}
           />
         </div>
-        <button disabled={isLoading}> {/* Disable the button when loading */}
-          {isLoading ? 'Загрузка...' : 'Войти'}
+        <button disabled={isLoading}>
+          {isLoading ? "Загрузка..." : "Войти"}
         </button>
       </form>
     </div>

@@ -102,7 +102,7 @@ const SignUp = () => {
               <div style={{ color: `var(--font-color)` }}>{errors}</div>
             )}
           </div>
-          <button type="submit" disabled={isLoading}>
+          <button  disabled={isLoading}>
             Зарегестрироваться
           </button>
         </form>

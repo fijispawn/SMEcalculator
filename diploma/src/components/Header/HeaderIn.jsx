@@ -23,31 +23,6 @@ const HeaderIn = () => {
   };
 
   const [modalActive, setModalActive] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
-  const [reloadTrigger, setReloadTrigger] = useState(false);
-  
-  useEffect(() => {
-    const fetchAccountInfo = async () => {
-      try {
-        const response = await fetch(
-          "https://enterpizemate.dyzoon.dev/api/registration/account-info/",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setUserInfo(data);
-      } catch (error) {
-        console.error("Failed to fetch user info:", error);
-      }
-    };
-
-    fetchAccountInfo();
-  }, [reloadTrigger]);
 
   return (
     <div className="header">

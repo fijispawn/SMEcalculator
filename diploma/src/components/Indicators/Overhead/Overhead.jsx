@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import "../Indicators.css";
-import {IndicatorsWrapper} from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
+import { IndicatorsWrapper } from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
+import Calendar from "../../Modal/Calendar.jsx";
+import Button from "../../Button/Button.jsx";
 
 const Overhead = () => {
+  const [modalActive, setModalActive] = useState(false);
+  const [selectedDate, setSelectedDate] = useState({
+    month: "Календарь",
+    year: "",
+  });
   const [formData, setFormData] = useState({
     a: "",
     b: "",
@@ -31,6 +38,15 @@ const Overhead = () => {
     }));
   };
 
+  const updateDate = (month, year) => {
+    setSelectedDate({ month, year });
+  };
+
+  const isSaveDisabled =
+    Object.values(formData).every((value) => value.trim() === "") ||
+    selectedDate.month === "Календарь" ||
+    selectedDate.year === "";
+
   return (
     <IndicatorsWrapper activeTab="overhead">
       <div className="grid__form">
@@ -46,9 +62,17 @@ const Overhead = () => {
           </React.Fragment>
         ))}
       </div>
-      <div className="save">
-        <button>Календарь</button>
-        <button >Сохранить</button>
+      <div className="button__container">
+        <Button
+          text={`${selectedDate.month} ${selectedDate.year}`}
+          onClick={() => setModalActive(true)}
+        />
+        <Button text="Сохранить" disabled={isSaveDisabled} />
+        <Calendar
+          active={modalActive}
+          setActive={setModalActive}
+          updateDate={updateDate}
+        />
       </div>
     </IndicatorsWrapper>
   );

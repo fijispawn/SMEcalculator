@@ -13,7 +13,7 @@
 .naming__style {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   text-align: center;
   padding: 10px;
   margin-bottom: 10px;
@@ -66,9 +66,39 @@ input {
   color: var(--font-color);
 }
 
-.save {
+.button__container {
   display: flex;
   gap:10px;
   justify-content: center;
   align-items: center;
+}
+
+.save__message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  color: #FD7770; 
+  font-size: 14px;
+}
+
+.chart{
+  width: 700px;
+  height:350px
+}
+
+.chart__container{
+  display: flex; 
+  gap:30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdf{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:4px;
+  width: 100px;
 }

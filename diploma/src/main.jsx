@@ -21,6 +21,7 @@ import SignUp from "././components/Header/SignUp/SignUp.jsx";
 import { AuthProvider } from "./hooks/AuthContext.jsx";
 import Header from "./components/Header/Header.jsx";
 import SignUpSuccess from "./components/Header/SignUp/SignUpSuccess.jsx";
+import HeaderIn from "./components/Header/HeaderIn.jsx";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -30,7 +31,8 @@ root.render(
       <Router>
         <div className="app__wrapper">
           <div className="header__container">
-            <Header />
+            {/* <Header /> */}
+            <HeaderIn/>
           </div>
           <div className="content__container">
             <Routes>

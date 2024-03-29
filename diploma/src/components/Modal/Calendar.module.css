@@ -3,7 +3,7 @@
   width: 100vw;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.2);
-    top: 0;
+  top: 0;
   left: 0;
   display: none;
   justify-content: center;
@@ -19,8 +19,8 @@
 .content {
   border-radius: 30px;
   background-color: var(--content-container);
-  height: 200px;
-  width: 300px;
+  height: 400px;
+  width: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,27 +31,45 @@
   border: 0.1px thin var(--modal-border);
 }
 
-.buttons {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
   gap: 5px;
-  min-width: 200px;
 }
 
-.cancel {
+h1 {
+  margin: 0;
+}
+.button_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  gap: 10px;
+}
+
+.button {
+  min-width: 100px;
+  height: 50px;
+  background-color: transparent;
+  color: var(--font-color);
+}
+
+.button:hover {
+  color: var(--font-color);
+}
+
+.save.disabled {
+  width: 300px;
   background-color: transparent;
   color: var(--font-color);
   border: 1px solid var(--font-color);
 }
 
-.exit {
-  background-color: transparent;
-  color: var(--font-color);
-  border: 1px solid var(--font-color);
-}
-
-.exit:hover {
+.save {
+  width: 300px;
   background-color: #fd7770;
   transition: 0.1s ease-in;
   color: white;

@@ -1,0 +1,48 @@
+.modal {
+  height: 100vh;
+  width: 100vw;
+  position: absolute; /* Changed from absolute to fixed to ensure it covers the entire viewport */
+  top: 50px;
+  right: 220px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  font-size: 20px;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  height: 30px; /* Increased height for better clickability */
+  font-size: 16px;
+  color: var(--font-color);
+}
+
+.button:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+
+}
+
+.content {
+  border-radius: 20px;
+  background-color: var(--content-container);
+  height: 120px; /* Adjusted height */
+  width: 150px; /* Adjusted width */
+  display: flex;
+  justify-content: start; /* Align items to the start */
+  align-items: center;
+  flex-direction: column;
+  gap: 5px; /* Reduced gap for a compact layout */
+  overflow-y: auto;
+  padding: 10px;
+  box-shadow: 1px 2px 2px 2px var(--modal-shadow);
+}
+
+

@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import "../Indicators.css";
-import {IndicatorsWrapper} from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
-
+import { IndicatorsWrapper } from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
+import Calendar from "../../Modal/Calendar.jsx";
+import Button from "../../Button/Button.jsx";
 
 const Balance = () => {
+  const [modalActive, setModalActive] = useState(false);
+  const [selectedDate, setSelectedDate] = useState({
+    month: "Календарь",
+    year: "",
+  });
   const [formData, setFormData] = useState({
     a: "",
     b: "",
@@ -11,8 +17,8 @@ const Balance = () => {
     d: "",
     e: "",
     f: "",
-
   });
+  const [saveMessage, setSaveMessage] = useState("");
 
   const inputNames = {
     a: "Касса",
@@ -20,18 +26,34 @@ const Balance = () => {
     c: "Денежные резервы",
     d: "Задолженность покупателей",
     e: "Предоплата поставщику",
-    f:"Прочие оборотные активы",
+    f: "Прочие оборотные активы",
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
- 
+  const updateDate = (month, year) => {
+    setSelectedDate({ month, year });
+  };
+
+  const isSaveDisabled =
+    Object.values(formData).every((value) => value.trim() === "") ||
+    selectedDate.month === "Календарь" ||
+    selectedDate.year === "";
+
+  const handleSave = () => {
+    if (!isSaveDisabled) {
+      setFormData({ a: "", b: "", c: "", d: "", e: "", f: "" });
+      setSelectedDate({ month: "Календарь", year: "" });
+      setSaveMessage(
+        `Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`
+      );
+      setTimeout(() => setSaveMessage(""), 3000);
+    }
+  };
+
   return (
     <IndicatorsWrapper activeTab="balance">
       <div className="grid__form">
@@ -47,10 +69,24 @@ const Balance = () => {
           </React.Fragment>
         ))}
       </div>
-      <div className="save">
-        <button>Календарь</button>
-        <button >Сохранить</button>
+      <div className="button__container">
+        <Button
+          text={`${selectedDate.month} ${selectedDate.year}`}
+          onClick={() => setModalActive(true)}
+        />
+        <Button
+          text="Сохранить"
+          onClick={handleSave}
+          disabled={isSaveDisabled}
+        />
+
+        <Calendar
+          active={modalActive}
+          setActive={setModalActive}
+          updateDate={updateDate}
+        />
       </div>
+      {saveMessage && <div className="save__message">{saveMessage}</div>}
     </IndicatorsWrapper>
   );
 };

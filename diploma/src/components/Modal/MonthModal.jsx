@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./MonthModal.module.css"; // Adjust the path as necessary
+import styles from "./MonthModal.module.css"; 
 
 const months = [
   "Январь", "Февраль", "Март", "Апрель",
@@ -8,12 +8,10 @@ const months = [
 ];
 
 const MonthModal = ({ onSelect, active }) => {
-  // Define the handler for clicking outside the modal content
   const handleBackgroundClick = () => {
-    onSelect(null); // Assuming onSelect(null) is the way to close the modal by design
+    onSelect(null);
   };
 
-  // Improved click handler for selecting a month that also closes the modal
   const handleMonthClick = (month) => {
     onSelect(month);
   };
@@ -21,17 +19,17 @@ const MonthModal = ({ onSelect, active }) => {
   return (
     <div
       className={active ? `${styles.modal} ${styles.active}` : styles.modal}
-      onClick={handleBackgroundClick} // This handles clicks on the background
+      onClick={handleBackgroundClick} 
     >
       <div
         className={styles.content}
-        onClick={(e) => e.stopPropagation()} // Prevent background click action when clicking on the content
+        onClick={(e) => e.stopPropagation()} 
       >
         {months.map((month, index) => (
           <button
             key={index}
             className={styles.button}
-            onClick={() => handleMonthClick(month)} // Use the specific handler for month selection
+            onClick={() => handleMonthClick(month)} 
           >
             {month}
           </button>

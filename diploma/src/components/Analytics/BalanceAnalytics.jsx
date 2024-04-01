@@ -16,6 +16,7 @@ import Button from "../Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
+import Fake from "./FilledGraphs/Fake";
 
 ChartJS.register(
   CategoryScale,
@@ -49,7 +50,7 @@ const BalanceAnalytics = () => {
     datasets: [
       {
         label: "Баланс за все время",
-        data: [65, 59, 80],
+        data: [234,6, 59, 80],
         fill: false,
         backgroundColor: "rgb(253, 119, 112)",
         borderColor: "rgba(253, 119, 112, 0.3)",
@@ -81,7 +82,10 @@ const BalanceAnalytics = () => {
   return (
     <AnalyticsWrapper activeTab="balance-analytics">
       {!showChart && (
-        <Button text="Показать график" onClick={() => setShowChart(true)} />
+        <>
+          <Fake />
+          <Button disabled={true} text="Показать график" onClick={() => setShowChart(true)} />
+        </>
       )}
       {showChart && (
         <>

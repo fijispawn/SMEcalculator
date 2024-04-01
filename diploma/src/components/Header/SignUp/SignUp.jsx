@@ -31,7 +31,7 @@ const SignUp = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/registration/save-user",
+        "https://enterpizemate.dyzoon.dev/api/registration/save-user",
         {
           method: "POST",
           headers: {

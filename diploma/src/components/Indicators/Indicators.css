@@ -83,11 +83,12 @@ input {
 }
 
 .chart{
-  width: 700px;
+  width: 600px;
   height:350px
 }
 
 .chart__container{
+  margin-top: 20px;
   display: flex; 
   gap:30px;
   flex-direction: column;
@@ -99,6 +100,6 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap:4px;
+  gap:10px;
   width: 100px;
 }

@@ -11,9 +11,9 @@ const NavigationTabs = ({ activeTab }) => {
       <Link to="/overhead" className={`tab ${activeTab === 'overhead' ? 'tab__main' : 'tab'}`}>
         Накладные расходы
       </Link>
-      <Link to="/budget" className={`tab ${activeTab === 'budget' ? 'tab__main' : ''}`}>
+      {/* <Link to="/budget" className={`tab ${activeTab === 'budget' ? 'tab__main' : ''}`}>
         Операционный бюджет
-      </Link>
+      </Link> */}
       <Link to="/cashflow" className={`tab ${activeTab === 'cashflow' ? 'tab__main' : ''}`}>
         Движение средств
       </Link>

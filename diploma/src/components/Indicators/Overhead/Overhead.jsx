@@ -6,6 +6,8 @@ import Button from "../../Button/Button.jsx";
 
 const Overhead = () => {
   const [modalActive, setModalActive] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
+
   const [selectedDate, setSelectedDate] = useState({
     month: "Календарь",
     year: "",
@@ -32,10 +34,7 @@ const Overhead = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const updateDate = (month, year) => {
@@ -46,6 +45,17 @@ const Overhead = () => {
     Object.values(formData).every((value) => value.trim() === "") ||
     selectedDate.month === "Календарь" ||
     selectedDate.year === "";
+
+  const handleSave = () => {
+    if (!isSaveDisabled) {
+      setFormData({ a: "", b: "", c: "", d: "", e: "", f: "", g:"" });
+      setSelectedDate({ month: "Календарь", year: "" });
+      setSaveMessage(
+        `Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`
+      );
+      setTimeout(() => setSaveMessage(""), 3000);
+    }
+  };
 
   return (
     <IndicatorsWrapper activeTab="overhead">
@@ -67,15 +77,23 @@ const Overhead = () => {
           text={`${selectedDate.month} ${selectedDate.year}`}
           onClick={() => setModalActive(true)}
         />
-        <Button text="Сохранить" disabled={isSaveDisabled} />
+        <Button
+          text="Сохранить"
+          onClick={handleSave}
+          disabled={isSaveDisabled}
+        />
+
         <Calendar
           active={modalActive}
           setActive={setModalActive}
           updateDate={updateDate}
         />
       </div>
+      {saveMessage && <div className="save__message">{saveMessage}</div>}
     </IndicatorsWrapper>
   );
 };
+
+
 
 export default Overhead;

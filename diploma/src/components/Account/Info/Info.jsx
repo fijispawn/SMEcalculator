@@ -3,6 +3,7 @@ import "../Account.css";
 import { AccountWrapper } from "../AccountWrapper/AccountWrapper";
 import AccountData from "../AccountData";
 import { MdEdit } from "react-icons/md";
+import Button from "../../Button/Button";
 
 const Account = () => {
   const [form, setForm] = useState({
@@ -90,12 +91,12 @@ const Account = () => {
       return (
         <>
           <span>Отсутствует информация о пользователе</span>
-          <button
+          <Button
             className="flex justify-center items-center gap-1"
             onClick={handleEditClick}
           >
             <MdEdit /> Изменить
-          </button>
+          </Button>
         </>
       );
     }

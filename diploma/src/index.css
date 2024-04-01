@@ -26,7 +26,8 @@
   --input-color: #3c3c3c;
   --header-font: white;
   --modal-shadow: #646464;
-  --modal-border:#f6e9e0;
+  --modal-border: #f6e9e0;
+  --filled-date-container: #fd7770;
 }
 
 #root[data-theme="dark"] {
@@ -42,7 +43,8 @@
   --input-color: #f6e9e0;
   --header-font: #f6e9e0;
   --modal-shadow: #272727;
-  --modal-border:#272727;
+  --modal-border: #272727;
+  --filled-date-container: #272727;
 }
 
 html {

@@ -22,6 +22,8 @@
 .tab__container {
   width: 100%;
   display: flex;
+  flex-shrink: 0;
+  margin-top: 20px;
   margin-bottom: 20px;
   gap: 10px;
   flex-shrink: 0;
@@ -68,6 +70,7 @@ input {
 
 .button__container {
   display: flex;
+  
   gap:10px;
   justify-content: center;
   align-items: center;

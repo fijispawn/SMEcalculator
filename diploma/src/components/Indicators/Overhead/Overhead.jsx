@@ -15,7 +15,7 @@ const Overhead = () => {
   const [formData, setFormData] = useState({
     salary: "",
     bonus: "",
-    salery_taxes: "",
+    salary_taxes: "",
     rent: "",
     adds: "",
     taxes: "",
@@ -25,7 +25,7 @@ const Overhead = () => {
   const inputNames = {
     salary: "Зарплата сотрудникам",
     bonus: "Доплаты сотрудникам",
-    salery_taxes: "Зарплатные налоги",
+    salary_taxes: "Зарплатные налоги",
     rent: "Аренда помещения",
     adds: "Реклама",
     taxes: "Налоги",
@@ -88,7 +88,7 @@ const Overhead = () => {
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
-          setFormData({ salary: "", bonus: "", salery_taxes: "", rent: "", adds: "", taxes: "", patent:"" });
+          setFormData({ salary: "", bonus: "", salary_taxes: "", rent: "", adds: "", taxes: "", patent:"" });
           setSelectedDate({ month: "Календарь", year: "" });
           setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
           setTimeout(() => setSaveMessage(""), 3000);

@@ -12,3 +12,9 @@
     border-radius: 30px;
     justify-content: center;
 }
+
+@media all and (max-width:540px) {
+    .wrapper{
+        background-color: transparent;
+    }
+}

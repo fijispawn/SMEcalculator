@@ -33,3 +33,15 @@
   z-index: 2;
   letter-spacing: 2px;
 }
+
+.mobile_home__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:20px
+}
+
+.mobile_text{
+  text-align: center;
+}

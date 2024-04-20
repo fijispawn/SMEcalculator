@@ -26,7 +26,6 @@ const SignIn = () => {
     setIsLoading(true);
 
     try {
-      // Step 1: Login
       const loginResponse = await fetch(
         "https://enterpizemate.dyzoon.dev/api/registration/login-user",
         {

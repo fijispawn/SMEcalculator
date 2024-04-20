@@ -1,5 +1,5 @@
-.indicators__wrapper{
-  display: flex ;
+.indicators__wrapper {
+  display: flex;
 }
 
 .grid__form {
@@ -49,13 +49,13 @@
   text-align: center;
   background: none;
   cursor: pointer;
-  color: #FD7770 !important;
+  color: #fd7770 !important;
   font-weight: 300;
-  border-bottom: 2px solid #FD7770;
+  border-bottom: 2px solid #fd7770;
 }
 
 .tab:hover {
-  border-bottom: 2px solid #FD7770;
+  border-bottom: 2px solid #fd7770;
 }
 
 input {
@@ -70,8 +70,7 @@ input {
 
 .button__container {
   display: flex;
-  
-  gap:10px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }
@@ -81,28 +80,28 @@ input {
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  color: #FD7770; 
+  color: #fd7770;
   font-size: 14px;
 }
 
-.chart{
+.chart {
   width: 600px;
-  height:350px
+  height: 350px;
 }
 
-.chart__container{
+.chart__container {
   margin-top: 20px;
-  display: flex; 
-  gap:30px;
+  display: flex;
+  gap: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.pdf{
+.pdf {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap:10px;
+  gap: 10px;
   width: 100px;
 }

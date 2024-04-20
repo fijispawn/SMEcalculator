@@ -61,8 +61,31 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding:10px;
+  padding: 10px;
   border: solid 1px var(--font-color);
   border-radius: 30px;
+}
+
+.theme__toggle{
+  display:flex;
+  font-size: 40px;
+}
+
+.change__password{
+  display: flex;
+}
+
+@media all and (max-width: 540px) {
+  .account__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .tab__container{
+  overflow-x: scroll;
+  position: fixed;
+  top:60px
+  }
 }
 

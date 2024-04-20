@@ -3,7 +3,6 @@ import Avatar from "../../assets/avatar.svg";
 import "./AccountData.css";
 import { GrLicense } from "react-icons/gr";
 import Exit from "../Modal/Exit";
-import Button from "../Button/Button";
 
 const AccountData = ({ name, surname }) => {
   const [modalActive, setModalActive] = useState(false)
@@ -17,8 +16,7 @@ const AccountData = ({ name, surname }) => {
         <GrLicense />
         Лицензия действует до: xx.xx.xx
       </div>
-      <Button text='Выйти' onClick={() => setModalActive(true)}/>
-
+      <button className='exit' onClick={() => setModalActive(true)}>Выйти</button> 
     </div>
   );
 };

@@ -27,7 +27,6 @@
 }
 
 .fake{
-
 display: flex;
 justify-content: center;
 align-items: center;
@@ -40,5 +39,4 @@ color: #f6e9e0;
 margin-bottom: 20px;
 margin-top: 10px;
 border-radius: 30px;
-
 }

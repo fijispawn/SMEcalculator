@@ -35,4 +35,13 @@ text-align: right;
   height: 100px;
 }
 
-
+.mobile__header {
+  display: flex;
+  gap: 30px;
+  max-width: 23px;
+  justify-content: center; 
+  align-items: center;  
+  /* position:fixed;
+  bottom:20px;
+  color:black */
+}

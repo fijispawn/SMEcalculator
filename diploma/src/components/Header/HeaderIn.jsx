@@ -17,6 +17,7 @@ const HeaderIn = () => {
   const handleLightThemeClick = () => {
     setTheme("light");
   };
+  
   const handleDarkThemeClick = () => {
     setTheme("dark");
     console.log("theme changed");
@@ -25,44 +26,46 @@ const HeaderIn = () => {
   const [modalActive, setModalActive] = useState(false);
 
   return (
-    <div className="header">
-      <Link to="/">
+    <div>
+      <div className="header">
+        <Link to="/">
+          <img
+            className="cursor-pointer"
+            src={theme === "light" ? LogoFirst : LogoSecond}
+          />
+        </Link>
         <img
-          className="cursor-pointer"
-          src={theme === "light" ? LogoFirst : LogoSecond}
+          className="w-10 cursor-pointer"
+          src={theme === "light" ? LightTheme : DarkTheme}
+          alt={theme === "light" ? "dark" : "light"}
+          onClick={
+            theme === "light" ? handleDarkThemeClick : handleLightThemeClick
+          }
         />
-      </Link>
-      <img
-        className="w-10 cursor-pointer"
-        src={theme === "light" ? LightTheme : DarkTheme}
-        alt={theme === "light" ? "dark" : "light"}
-        onClick={
-          theme === "light" ? handleDarkThemeClick : handleLightThemeClick
-        }
-      />
-      <Link to="/balance" className="header__element">
-        <div className="flex items-center gap-2.5">
-          <FiActivity />
-          Показатели
+        <Link to="/balance" className="header__element">
+          <div className="flex items-center gap-2.5">
+            <FiActivity />
+            Показатели
+          </div>
+        </Link>
+        <Link to="/balance-analytics" className="header__element">
+          <div className="flex items-center gap-2.5">
+            <SiGoogleanalytics />
+            Аналитика
+          </div>
+        </Link>
+        <Link to="/account" className="header__element">
+          <div className="flex items-center gap-2.5">
+            <MdManageAccounts />
+            Аккаунт
+          </div>
+        </Link>
+        <div className="account__header">
+          <img src={Avatar} alt="avatar"></img>
+          <span className="flex items-center justify-center">name</span>
+          <button onClick={() => setModalActive(true)}>Выход</button>
+          <Exit active={modalActive} setActive={setModalActive} />
         </div>
-      </Link>
-      <Link to="/balance-analytics" className="header__element">
-        <div className="flex items-center gap-2.5">
-          <SiGoogleanalytics />
-          Аналитика
-        </div>
-      </Link>
-      <Link to="/account" className="header__element">
-        <div className="flex items-center gap-2.5">
-          <MdManageAccounts />
-          Аккаунт
-        </div>
-      </Link>
-      <div className="account__header">
-        <img src={Avatar} alt="avatar"></img>
-        <span className="flex items-center justify-center">name</span>
-        <button onClick={() => setModalActive(true)}>Выход</button>
-        <Exit active={modalActive} setActive={setModalActive} />
       </div>
     </div>
   );

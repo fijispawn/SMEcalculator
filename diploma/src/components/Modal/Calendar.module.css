@@ -75,3 +75,9 @@ h1 {
   color: white;
   border: 1px solid #fd7770;
 }
+
+@media all and (max-width:540px) {
+  .content {
+    width:350px
+  }
+}

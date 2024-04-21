@@ -61,7 +61,7 @@ const SignUp = () => {
 
   return (
     <div className={styles.form}>
-      <h1 className="pb-3">Регистрация</h1>
+      <h1 className="pb-3 sm: text-4xl">Регистрация</h1>
       {isLoading ? (
         <div>Загрузка...</div>
       ) : (

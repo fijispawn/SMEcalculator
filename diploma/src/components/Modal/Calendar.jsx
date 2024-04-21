@@ -43,7 +43,7 @@ const Calendar = ({ active, setActive, updateDate }) => {
           <FaRegCalendarAlt className="text-[30px]" />
           <h1>Календарь</h1>
         </div>
-        <span> Выберите месяц и год внесения данных:</span>
+        <span> Выберите месяц и год <br/>внесения данных:</span>
         <div className={styles.button_container}>
           <button
             className={styles.button}

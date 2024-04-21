@@ -4,6 +4,13 @@
   transition: background-color 600ms linear;
 }
 
+@media all and (max-width:540px) {
+  #root{
+    background: var(--mobile-background);
+  }
+  
+}
+
 
 .content__container {
   display: flex;
@@ -15,6 +22,7 @@
 body {
   height: 100%;
   top: 0;
+  overflow: hidden;
 }
 
 .app__wrapper {

@@ -4,6 +4,8 @@ import "../Account.css";
 import { useTheme } from "../../../hooks/useTheme";
 import LightTheme from "../../../assets/lightTheme.svg";
 import DarkTheme from "../../../assets/darkTheme.svg";
+import { FaLock } from "react-icons/fa6";
+
 
 const SecurityMobile = () => {
 
@@ -48,6 +50,7 @@ const SecurityMobile = () => {
         <div className="account">
             <div className="change__password">
                 <p>Сменить пароль</p>
+                <FaLock />
             </div>
           <form className="form" onSubmit={handleSubmit}>
             <input

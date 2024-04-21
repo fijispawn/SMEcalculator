@@ -74,7 +74,7 @@ const SignIn = () => {
 
   return (
     <div className={styles.form}>
-      <h2 className="pb-3">Вход в аккаунт</h2>
+      <h2 className="pb-3 sm: text-4xl">Вход в аккаунт</h2>
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>

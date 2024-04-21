@@ -66,13 +66,23 @@
   border-radius: 30px;
 }
 
-.theme__toggle{
-  display:flex;
-  font-size: 40px;
+.theme__toggle {
+  display: flex;
+  font-size: 30px;
+  align-items: center;
+  text-align: right;
+  justify-content: center;
+  gap: 20px;
 }
 
-.change__password{
+.change__password {
   display: flex;
+  font-size: 30px;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+
+  text-align: right;
 }
 
 @media all and (max-width: 540px) {
@@ -81,11 +91,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap:30px
   }
-  .tab__container{
-  overflow-x: scroll;
-  position: fixed;
-  top:60px
+  .tab__container {
+    overflow-x: scroll;
+    position: fixed;
+    top: 60px;
   }
 }
-

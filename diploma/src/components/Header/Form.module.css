@@ -12,3 +12,10 @@
     align-items: center;
     font-size: 20px;
 }
+
+@media all and (max-width:540px) {
+    .form{
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+    
+}

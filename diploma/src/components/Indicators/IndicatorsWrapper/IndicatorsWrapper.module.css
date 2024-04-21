@@ -20,4 +20,11 @@
   flex: 1 0;
 }
 
+@media all and (max-width:540px) {
+  .wrapper{
+    background-color: transparent;  
+    min-height: 0;  
+  }
+}
+
 

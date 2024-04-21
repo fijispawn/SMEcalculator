@@ -14,19 +14,14 @@ function HomePage() {
         <div className="mobile_home__container">
           <img className="mobile_main__image" src={Main} />
           <div className="mobile_text">
-            <p>
-              <TypeAnimation
-                sequence={[
-                  "EnterprizeMate - незаменимый инструмент для управленческого учета и анализа данных.",
-                  1000,
-                ]}
-                speed={70}
-                repeat={Infinity}
-              />
-            </p>
+              EnterprizeMate - незаменимый инструмент для управленческого учета
+              и анализа данных.
           </div>
-          <Link to="/signup">Создать аккаунт</Link>
-          <Link to="/signin">Войти</Link>
+          <div className="mobilelinks__container">
+          <Link className="mobilelinks" to="/signup">Создать аккаунт</Link>
+          <Link className="mobilelinks" to="/signin">Войти</Link>
+          </div>
+         
         </div>
       ) : (
         <div className="home__container">

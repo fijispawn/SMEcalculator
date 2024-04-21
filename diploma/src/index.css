@@ -28,6 +28,7 @@
   --modal-shadow: #646464;
   --modal-border: #f6e9e0;
   --filled-date-container: #fd7770;
+  --mobile-background: #f6e9e0;
 }
 
 #root[data-theme="dark"] {
@@ -45,15 +46,25 @@
   --modal-shadow: #272727;
   --modal-border: #272727;
   --filled-date-container: #272727;
+  --mobile-background: #3c3c3c;
+
 }
 
 html {
   height: 100%;
+  overflow: hidden;
+
 }
 
 a {
-  color: white !important;
+  color: white ;
   text-decoration: none !important;
+}
+
+@media all and (max-width:540px) {
+  a{
+    color: var(--font-color);
+  }
 }
 
 button {

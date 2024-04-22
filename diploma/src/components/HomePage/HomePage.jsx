@@ -13,6 +13,7 @@ function HomePage() {
       {isMobile ? (
         <div className="mobile_home__container">
           <img className="mobile_main__image" src={Main} />
+          <h1 className="welcome">Добро пожаловать!</h1>
           <div className="mobile_text">
               EnterprizeMate - незаменимый инструмент для управленческого учета
               и анализа данных.

@@ -20,10 +20,14 @@ import "./index.css";
 import MobileHeader from "./components/Header/MobileHeader.jsx";
 import InfoMobile from "./components/Account/Info/InfoMobile.jsx";
 import SecurityMobile from "./components/Account/Security/SecurityMobile.jsx";
+import { useAuth } from "./hooks/AuthContext"; 
+
 
 
 function App() {
   const isDesktop = useMediaQuery("(min-width:600px)"); 
+  const { isLoggedIn } = useAuth();
+
 
   return (
     <div className="app__wrapper">
@@ -53,7 +57,7 @@ function App() {
           <Route path="/cashflow-analytics" element={<CashflowAnalytics />} />
         </Routes>
       </div>
-      {!isDesktop && (
+      {!isDesktop &&  (
         <div className="mobile-header__container">
           <MobileHeader />
         </div>

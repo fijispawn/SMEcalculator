@@ -37,11 +37,18 @@ text-align: right;
 
 .mobile__header {
   display: flex;
-  gap: 30px;
-  max-width: 23px;
-  justify-content: center; 
-  align-items: center;  
-  /* position:fixed;
-  bottom:20px;
-  color:black */
+  justify-content: center;  
+  align-items: center;      
+  position: fixed;          
+  left: 0;                  
+  right: 0;                 
+  bottom: 0;                
+  padding: 10px;           
+  z-index: 1000;           
+  gap:40px;
 }
+
+.mobile__header .active {
+  color: #fd7770; 
+}
+

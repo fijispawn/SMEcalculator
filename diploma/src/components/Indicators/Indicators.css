@@ -109,24 +109,32 @@ input {
 @media all and (max-width: 540px) {
   .grid__form {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    max-height: 420px;
+    align-items: center;
+    max-height: 450px;
+    min-width: 330px;
     overflow-y: auto;
   }
   input {
     max-width: 300px;
-    padding: 5px;
+    min-height: 40px;
+    max-height: 42px;
   }
   .naming__style {
     display: flex;
-    padding: 0;
-    margin:0;
+    margin: 0;
+    padding: 6px;
+    font-size: 16px;
   }
-  .button__container{
+  .button__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 30px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 100px;
   }
 }

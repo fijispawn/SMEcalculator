@@ -96,6 +96,8 @@
   .tab__container {
     overflow-x: scroll;
     position: fixed;
-    top: 60px;
+    top: 20px;        
+    left: 0;                  
+    right: 0;                 
   }
 }

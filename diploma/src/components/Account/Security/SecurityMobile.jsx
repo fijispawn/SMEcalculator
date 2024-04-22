@@ -3,20 +3,22 @@ import { AccountWrapper } from "../AccountWrapper/AccountWrapper";
 import "../Account.css";
 import { useTheme } from "../../../hooks/useTheme";
 import LightTheme from "../../../assets/lightTheme.svg";
+import { FaMoon } from "react-icons/fa";
+
+import { FaSun } from "react-icons/fa";
+
 import DarkTheme from "../../../assets/darkTheme.svg";
 import { FaLock } from "react-icons/fa6";
 
-
 const SecurityMobile = () => {
-
-    const { theme, setTheme } = useTheme();
-    const handleLightThemeClick = () => {
-      setTheme("light");
-    };
-    const handleDarkThemeClick = () => {
-      setTheme("dark");
-      console.log("theme changed");
-    };
+  const { theme, setTheme } = useTheme();
+  const handleLightThemeClick = () => {
+    setTheme("light");
+  };
+  const handleDarkThemeClick = () => {
+    setTheme("dark");
+    console.log("theme changed");
+  };
 
   const [form, setForm] = useState({
     oldpassword: "",
@@ -37,21 +39,24 @@ const SecurityMobile = () => {
     <AccountWrapper activeTab="security">
       <div className="account__wrapper">
         <div className="theme__toggle">
-        <p>Сменить Тему</p>
-      <img
-          className="w-10 cursor-pointer"
-          src={theme === "light" ? LightTheme : DarkTheme}
-          alt={theme === "light" ? "dark" : "light"}
-          onClick={
-            theme === "light" ? handleDarkThemeClick : handleLightThemeClick
-          }
-        />
+          <p>Сменить Тему</p>
+          {theme === "light" ? (
+            <FaSun
+              className="w-10 cursor-pointer"
+              onClick={handleDarkThemeClick}
+            />
+          ) : (
+            <FaMoon
+              className="w-10 cursor-pointer"
+              onClick={handleLightThemeClick}
+            />
+          )}
         </div>
         <div className="account">
-            <div className="change__password">
-                <p>Сменить пароль</p>
-                <FaLock />
-            </div>
+          <div className="change__password">
+            <p>Сменить пароль</p>
+            <FaLock />
+          </div>
           <form className="form" onSubmit={handleSubmit}>
             <input
               type="password"

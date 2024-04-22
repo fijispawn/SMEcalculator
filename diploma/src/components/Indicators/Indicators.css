@@ -137,4 +137,11 @@ input {
     right: 0;
     bottom: 100px;
   }
+
+  .tab__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+  }
 }

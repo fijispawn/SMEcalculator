@@ -57,7 +57,7 @@ function App() {
           <Route path="/cashflow-analytics" element={<CashflowAnalytics />} />
         </Routes>
       </div>
-      {!isDesktop &&  (
+      {!isDesktop && isLoggedIn && (
         <div className="mobile-header__container">
           <MobileHeader />
         </div>

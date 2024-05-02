@@ -40,6 +40,9 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+  left: 0;
+  right:0;
+  bottom:200px;
 }
 
 .mobile_text {
@@ -50,7 +53,7 @@
 }
 
 .mobile_main__image {
-  max-width: 300px;
+  max-width: 250px;
 }
 
 .mobilelinks__container {
@@ -60,6 +63,10 @@
   flex-direction: column;
   color: var(--font-color);
   gap: 20px;
+  position:fixed;
+  left: 0;
+  right:0;
+  bottom:20px;
 }
 
 .mobilelinks {

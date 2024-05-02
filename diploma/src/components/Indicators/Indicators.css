@@ -111,13 +111,13 @@ input {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 400px;
+    max-height: 320px;
     min-width: 330px;
     overflow-y: auto;
     position:fixed;
     left:0;
     right:0;
-    top:120px;
+    top:100px;
   }
   input {
     max-width: 300px;
@@ -147,5 +147,9 @@ input {
     justify-content: center;
     align-items: center;
     overflow-y: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
   }
 }

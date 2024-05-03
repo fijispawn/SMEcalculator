@@ -55,6 +55,7 @@
 
 .mobile_main__image {
   max-width: 250px;
+  padding: 4px;
 }
 
 .mobilelinks__container {

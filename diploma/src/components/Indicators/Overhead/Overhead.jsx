@@ -16,9 +16,9 @@ const Overhead = () => {
   const [formData, setFormData] = useState({
     salary: "",
     bonus: "",
-    salary_taxes: "",
+    salaryTaxes: "",
     rent: "",
-    adds: "",
+    ads: "",
     taxes: "",
     patent: "",
   });
@@ -26,9 +26,9 @@ const Overhead = () => {
   const inputNames = {
     salary: "Зарплата сотрудникам",
     bonus: "Доплаты сотрудникам",
-    salary_taxes: "Зарплатные налоги",
+    salaryTaxes: "Зарплатные налоги",
     rent: "Аренда помещения",
-    adds: "Реклама",
+    ads: "Реклама",
     taxes: "Налоги",
     patent: "Патент",
   };
@@ -91,9 +91,9 @@ const Overhead = () => {
           setFormData({
             salary: "",
             bonus: "",
-            salary_taxes: "",
+            salaryTaxes: "",
             rent: "",
-            adds: "",
+            ads: "",
             taxes: "",
             patent: "",
           });

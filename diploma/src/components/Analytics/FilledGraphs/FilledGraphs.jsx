@@ -10,9 +10,18 @@ const FilledGraphs = () => {
     fetch('https://enterpizemate.dyzoon.dev/api/analytics/get-costs')
       .then(response => response.json())
       .then(data => {
-        setDates(data);
+        console.log("Received data:", data);
+        if (Array.isArray(data)) {
+          setDates(data);
+        } else {
+          console.error('Expected an array but received:', data);
+          setDates([]);  
+        }
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setDates([]);  
+      });
   }, []);
 
   if (dates.length === 0) {

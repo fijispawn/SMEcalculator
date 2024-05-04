@@ -4,7 +4,7 @@ import { MdEdit } from "react-icons/md";
 import Empty from "./Empty";
 
 const FilledGraphs = () => {
-  const [dates, setDates] = useState([]);
+  const [dates, setDates] = useState({});
 
   useEffect(() => {
     fetch('https://enterpizemate.dyzoon.dev/api/analytics/get-costs')
@@ -16,24 +16,24 @@ const FilledGraphs = () => {
       })
       .then(data => {
         console.log("Received data:", data);
-        setDates(data?.data ?? []);
+        setDates(data);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        setDates([]); 
+        setDates({}); 
       });
   }, []);
 
-  if (Object.entries(dates).length === 0) {
-    console.log("Rendering Empty component because dates array is empty.");
+  if (Object.keys(dates).length === 0) {
+    console.log("Rendering Empty component because no dates data.");
     return <Empty />;
   }
 
   return (
     <div className={styles.wrapper}>
-      {dates.map((date, index) => (
+      {Object.entries(dates).map(([date, details], index) => (
         <div key={index} className={styles.container}>
-          <span className="text-left">{`${date.month} ${date.year}`}</span>
+          <span className="text-left">{date}</span>
           <div className="flex justify-end items-center">
             <MdEdit /> Изменить
           </div>

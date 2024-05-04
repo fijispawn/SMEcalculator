@@ -5,6 +5,7 @@ import Empty from "./Empty";
 
 const FilledGraphs = () => {
   const [dates, setDates] = useState([]);
+  const [isValidData, setIsValidData] = useState(false);  
 
   useEffect(() => {
     fetch('https://enterpizemate.dyzoon.dev/api/analytics/get-costs')
@@ -16,16 +17,22 @@ const FilledGraphs = () => {
       })
       .then(data => {
         console.log("Received data:", data);
-        setDates(data?.data ?? []);
+        if (data && Array.isArray(data.data) && data.data.some(item => item.month && item.year)) {
+          setDates(data.data);
+          setIsValidData(true);  
+        } else {
+          setIsValidData(false);  
+        }
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        setDates([]); 
+        setDates([]);
+        setIsValidData(false);  
       });
   }, []);
 
-  if (dates.length === 0) {
-    console.log("Rendering Empty component because dates array is empty.");
+  if (!isValidData) {
+    console.log("Rendering Empty component due to invalid data.");
     return <Empty />;
   }
 

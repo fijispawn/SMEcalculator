@@ -74,7 +74,7 @@ const Overhead = () => {
       const saveData = {
         formData: {
           ...numericFormData,
-          date: dayjs(`${year}-${month}`).format("YYYY-MM-DD"),
+          date: dayjs(`${selectedDate.year}-${monthNumber}`).format("YYYY-MM-DD"),
         },
       };
 

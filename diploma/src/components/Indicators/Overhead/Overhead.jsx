@@ -72,10 +72,8 @@ const Overhead = () => {
       const monthNumber = monthNamesToNumbers[selectedDate.month] || 0;
 
       const saveData = {
-        formData: {
-          ...numericFormData,
-          date: dayjs(`${selectedDate.year}-${monthNumber}`).format("YYYY-MM-DD"),
-        },
+        ...numericFormData,
+        date: dayjs(`${selectedDate.year}-${monthNumber}`).format("YYYY-MM-DD"),
       };
 
       fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {

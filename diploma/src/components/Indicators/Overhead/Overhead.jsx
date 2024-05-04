@@ -3,6 +3,7 @@ import "../Indicators.css";
 import { IndicatorsWrapper } from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
 import Calendar from "../../Modal/Calendar.jsx";
 import Button from "../../Button/Button.jsx";
+import dayjs from "dayjs";
 
 const Overhead = () => {
   const [modalActive, setModalActive] = useState(false);
@@ -46,60 +47,67 @@ const Overhead = () => {
     selectedDate.month === "Календарь" ||
     selectedDate.year === "";
 
-    const handleSave = () => {
-      if (!isSaveDisabled) {
-        const numericFormData = Object.keys(formData).reduce((acc, key) => {
-          acc[key] = formData[key] ? Number(formData[key]) : 0; 
-          return acc;
-        }, {});
-    
-        const monthNamesToNumbers = {
-          Январь: 1,
-          Февраль: 2,
-          Март: 3,
-          Апрель: 4,
-          Май: 5,
-          Июнь: 6,
-          Июль: 7,
-          Август: 8,
-          Сентябрь: 9,
-          Октябрь: 10,
-          Ноябрь: 11,
-          Декабрь: 12
-        };
-    
-        const monthNumber = monthNamesToNumbers[selectedDate.month] || 0; 
-    
-        const saveData = {
-          formData: numericFormData,
-          date: {
-            ...selectedDate,
-            month: monthNumber
-          }
-        };
-    
-        fetch('https://enterpizemate.dyzoon.dev/api/analytics/save-costs', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(saveData),
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-          setFormData({ salary: "", bonus: "", salary_taxes: "", rent: "", adds: "", taxes: "", patent:"" });
+  const handleSave = () => {
+    if (!isSaveDisabled) {
+      const numericFormData = Object.keys(formData).reduce((acc, key) => {
+        acc[key] = formData[key] ? Number(formData[key]) : 0;
+        return acc;
+      }, {});
+
+      const monthNamesToNumbers = {
+        Январь: 1,
+        Февраль: 2,
+        Март: 3,
+        Апрель: 4,
+        Май: 5,
+        Июнь: 6,
+        Июль: 7,
+        Август: 8,
+        Сентябрь: 9,
+        Октябрь: 10,
+        Ноябрь: 11,
+        Декабрь: 12,
+      };
+
+      const monthNumber = monthNamesToNumbers[selectedDate.month] || 0;
+
+      const saveData = {
+        formData: {
+          ...numericFormData,
+          date: dayjs(`${year}-${month}`).format("YYYY-MM-DD"),
+        },
+      };
+
+      fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(saveData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          setFormData({
+            salary: "",
+            bonus: "",
+            salary_taxes: "",
+            rent: "",
+            adds: "",
+            taxes: "",
+            patent: "",
+          });
           setSelectedDate({ month: "Календарь", year: "" });
-          setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
+          setSaveMessage(
+            `Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`
+          );
           setTimeout(() => setSaveMessage(""), 3000);
         })
         .catch((error) => {
-          console.error('Error:', error);
+          console.error("Error:", error);
         });
-      }
-    };
-    
-    
+    }
+  };
 
   return (
     <IndicatorsWrapper activeTab="overhead">
@@ -137,7 +145,5 @@ const Overhead = () => {
     </IndicatorsWrapper>
   );
 };
-
-
 
 export default Overhead;

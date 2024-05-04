@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../Indicators/Indicators.css";
 import { AnalyticsWrapper } from "./AnalyticsWrapper/AnalyticsWrapper";
 import { Line } from "react-chartjs-2";
@@ -30,27 +30,28 @@ ChartJS.register(
 
 const OverheadAnalytics = () => {
   const [showChart, setShowChart] = useState(false);
+  const [chartData, setChartData] = useState([]);
   const chartRef = useRef();
+
+  useEffect(() => {
+    fetch('https://enterpizemate.dyzoon.dev/api/analytics/get-costs')
+      .then(response => response.json())
+      .then(data => {
+        const summ = Object.entries(data).map(([key, value]) => value.summ);
+        setChartData(summ);
+      })
+      .catch(error => console.error('Failed to fetch data', error));
+  }, []);
 
   const data = {
     labels: [
-      "Январь",
-      "Февраль",
-      "Март",
-      "Апрель",
-      "Май",
-      "Июнь",
-      "Июль",
-      "Август",
-      "Сентябрь",
-      "Октябрь",
-      "Ноябрь",
-      "Декабрь",
+      "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+      "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
     ],
     datasets: [
       {
-        label: "Сумма накладных расходов в тыс. руб. ",
-        data: [525, 545,  570, 550, 590],
+        label: "Сумма накладных расходов в тыс. руб.",
+        data: chartData, 
         fill: false,
         backgroundColor: "rgb(253, 119, 112)",
         borderColor: "rgba(253, 119, 112, 0.3)",

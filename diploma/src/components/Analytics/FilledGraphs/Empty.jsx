@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./FilledGraphs.module.css";
 
-const Fake = () => {
+const Empty = () => {
   return (
     <div className={styles.fake}>
         Отсутствуют заполненные данные! Перейдите во вкладку 'Показатели' для заполнения данных.
@@ -9,4 +9,4 @@ const Fake = () => {
   );
 };
 
-export default Fake;
+export default Empty;

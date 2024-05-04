@@ -1,45 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./FilledGraphs.module.css";
 import { MdEdit } from "react-icons/md";
+import Empty from "./Empty";
 
 const FilledGraphs = () => {
+  const [dates, setDates] = useState([]);
+
+  useEffect(() => {
+    fetch('https://enterpizemate.dyzoon.dev/api/analytics/get-costs')
+      .then(response => response.json())
+      .then(data => {
+        setDates(data);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  if (dates.length === 0) {
+    return <Empty />;  
+  }
+
   return (
     <div className={styles.wrapper}>
-      {/* 1 */}
-     <div className={styles.container}>
-        <span  className="text-left">Январь 2024</span>
-        <div className="flex justify-end items-center">
-          <MdEdit /> Изменить
+      {dates.map((date, index) => (
+        <div key={index} className={styles.container}>
+          <span className="text-left">{`${date.month} ${date.year}`}</span>
+          <div className="flex justify-end items-center">
+            <MdEdit /> Изменить
+          </div>
         </div>
-     </div>
-     {/* 2 */}
-     <div className={styles.container}>
-        <span className="text-left">Февраль 2024</span>
-        <div className="flex justify-end items-center">
-          <MdEdit /> Изменить
-        </div>
-     </div>
-     {/* 3 */}
-     <div className={styles.container}>
-        <span className="text-left">Март 2024</span>
-        <div className="flex justify-end items-center">
-          <MdEdit /> Изменить
-        </div>
-     </div>
-     {/* 4 */}
-     <div className={styles.container}>
-        <span className="text-left">Апрель 2024</span>
-        <div className="flex justify-end items-center">
-          <MdEdit /> Изменить
-        </div>
-     </div>
-     {/* 5 */}
-     <div className={styles.container}>
-        <span className="text-left">Май 2024</span>
-        <div className="flex justify-end items-center">
-          <MdEdit /> Изменить
-        </div>
-     </div>
+      ))}
     </div>
   );
 };

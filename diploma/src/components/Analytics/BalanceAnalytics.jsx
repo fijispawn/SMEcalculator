@@ -16,7 +16,7 @@ import Button from "../Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
-import Fake from "./FilledGraphs/Fake";
+import FilledGraphs from "./FilledGraphs/FilledGraphs";
 
 ChartJS.register(
   CategoryScale,
@@ -83,7 +83,7 @@ const BalanceAnalytics = () => {
     <AnalyticsWrapper activeTab="balance-analytics">
       {!showChart && (
         <>
-          <Fake />
+          <FilledGraphs />
           <Button disabled={true} text="Показать график" onClick={() => setShowChart(true)} />
         </>
       )}

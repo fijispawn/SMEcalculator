@@ -8,24 +8,25 @@ const FilledGraphs = () => {
 
   useEffect(() => {
     fetch('https://enterpizemate.dyzoon.dev/api/analytics/get-costs')
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
       .then(data => {
         console.log("Received data:", data);
-        if (Array.isArray(data)) {
-          setDates(data);
-        } else {
-          console.error('Expected an array but received:', data);
-          setDates([]);  
-        }
+        setDates(data?.data ?? []);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        setDates([]);  
+        setDates([]); 
       });
   }, []);
 
   if (dates.length === 0) {
-    return <Empty />;  
+    console.log("Rendering Empty component because dates array is empty.");
+    return <Empty />;
   }
 
   return (

@@ -85,7 +85,15 @@ const Overhead = () => {
         },
         body: JSON.stringify(saveData),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok.");
+          }
+          return response.text();
+        })
+        .then((text) => {
+          return text ? JSON.parse(text) : {};
+        })
         .then((data) => {
           console.log("Success:", data);
           setFormData({

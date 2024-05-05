@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import styles from "./FilledGraphs.module.css";
 import { MdEdit } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
+
 import Empty from "./Empty";
 
 const FilledGraphs = () => {
   const [dates, setDates] = useState({});
 
   useEffect(() => {
-    fetch('https://enterpizemate.dyzoon.dev/api/analytics/get-costs')
-      .then(response => {
+    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
+      .then((response) => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error('Network response was not ok.');
+        throw new Error("Network response was not ok.");
       })
-      .then(data => {
+      .then((data) => {
         console.log("Received data:", data);
         setDates(data);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setDates({}); 
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setDates({});
       });
   }, []);
 
@@ -36,6 +38,7 @@ const FilledGraphs = () => {
           <span className="text-left">{date}</span>
           <div className="flex justify-end items-center">
             <MdEdit /> Изменить
+            <FaTrashAlt />
           </div>
         </div>
       ))}

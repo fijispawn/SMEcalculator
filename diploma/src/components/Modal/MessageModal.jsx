@@ -1,5 +1,5 @@
 import React from "react";
-import "./Modal.css"; // Ensure you have some basic styling for the modal
+import "./MessageModal.css"; 
 
 const MessageModal = ({ isActive, onClose, children }) => {
   if (!isActive) return null;

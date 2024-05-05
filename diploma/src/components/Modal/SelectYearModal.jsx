@@ -1,9 +1,8 @@
 import React from "react";
-import styles from "./MonthModal.module.css";
+import styles from "./MonthModal.module.css"; 
 
 const SelectYearModal = ({ onSelect, active }) => {
-  const years = [2020, 2021, 2022, 2023, 2024];  
-
+  const years = [2020, 2021, 2022, 2023, 2024]; 
   const handleBackgroundClick = () => {
     onSelect(null); 
   };
@@ -19,7 +18,7 @@ const SelectYearModal = ({ onSelect, active }) => {
     >
       <div
         className={styles.content}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} 
       >
         {years.map((year, index) => (
           <button

@@ -114,10 +114,10 @@ input {
     max-height: 320px;
     min-width: 330px;
     overflow-y: auto;
-    position:fixed;
-    left:0;
-    right:0;
-    top:100px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100px;
   }
   input {
     max-width: 300px;
@@ -142,7 +142,7 @@ input {
     bottom: 100px;
   }
 
-  .tab__container{
+  .tab__container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -151,5 +151,10 @@ input {
     left: 0;
     right: 0;
     top: 0;
+  }
+
+  .chart {
+    position: fixed;
+    left: 20px;
   }
 }

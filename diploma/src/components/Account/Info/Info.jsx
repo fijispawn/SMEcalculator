@@ -19,6 +19,10 @@ const Account = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const allFieldsEmpty = () => {
+    return Object.values(form).every(field => field.trim() === "");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const userLogin = localStorage.getItem("userLogin"); 
@@ -90,7 +94,7 @@ const Account = () => {
     } else {
       return (
         <>
-          <span>Отсутствует информация о пользователе</span>
+          <span className="w-[280px] text-xl" >Отсутствует информация о пользователе</span>
           <Button
             className="flex justify-center items-center gap-1"
             onClick={handleEditClick}
@@ -134,7 +138,10 @@ const Account = () => {
                 value={form.income}
                 placeholder="Доход с начала года (в руб)"
               />
-              <button>Сохранить</button>
+              <Button
+                disabled={allFieldsEmpty()} 
+                text="Сохранить"
+              />
             </form>
           </div>
         )}

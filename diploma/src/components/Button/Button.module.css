@@ -1,15 +1,30 @@
 .button.disabled {
-    min-width: 300px;
-    background-color: transparent;
-    color: var(--font-color);
-    border: 1px solid var(--font-color);
-  }
-  
-  .button {
-    min-width: 300px;
-    max-width: 300px;
-    background-color: #fd7770;
-    transition: 0.1s ease-in;
-    color: white;
-    border: 1px solid #fd7770;
-  }
+  min-width: 300px;
+  background-color: transparent;
+  color: var(--font-color);
+  border: 1px solid var(--font-color);
+}
+
+.button {
+  min-width: 300px;
+  max-width: 300px;
+  background-color: #fd7770;
+  transition: 0.1s ease-in;
+  color: white;
+  border: 1px solid #fd7770;
+}
+
+.button.ghost{
+  min-width: 300px;
+  max-width: 300px;
+  background-color: transparent;
+  transition: 0.1s ease-in;
+  color: var(--font-color);
+  border: 1px solid var(--font-color);
+}
+
+.button.ghost:hover{
+  background-color: #fd7770;
+  transition: 0.1s ease-in;
+  border: 1px solid #fd7770;
+}

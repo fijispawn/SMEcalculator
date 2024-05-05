@@ -39,7 +39,7 @@ const OverheadAnalytics = () => {
 
   useEffect(() => {
     if (selectedYear) {
-      fetch(`https://enterpizemate.dyzoon.dev/api/analytics/get-costs?year=${selectedYear}`)
+      fetch(`https://enterpizemate.dyzoon.dev/api/analytics/get-costs`)
         .then(response => response.json())
         .then(data => {
           const summ = Object.entries(data).map(([key, value]) => value.summ);

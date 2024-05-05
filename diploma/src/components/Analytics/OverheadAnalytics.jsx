@@ -32,18 +32,18 @@ const OverheadAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then(response => response.json())
       .then(data => {
-        setAllData(data); // Store all data fetched
+        setAllData(data); 
       })
       .catch(error => console.error('Failed to fetch data', error));
   }, []);
 
   useEffect(() => {
-    // Filter data based on the selected year
     const filtered = Object.entries(allData).filter(([key, value]) => new Date(key).getFullYear() === selectedYear).map(([key, value]) => value.summ);
     setFilteredData(filtered);
   }, [selectedYear, allData]);
 
   const handleShowChart = () => {
+    console.log('Opening modal...');
     setShowModal(true);
   };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './MonthModal.css'
+import styles from './MonthModal.module.css'
 
 const SelectYearModal = ({ isOpen, onClose, onSelectYear }) => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());

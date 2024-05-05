@@ -2,21 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import "../Indicators/Indicators.css";
 import { AnalyticsWrapper } from "./AnalyticsWrapper/AnalyticsWrapper";
 import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import Button from "../Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
-import FilledGraphs from "./FilledGraphs/FilledGraphs";
+import FilledGraphs from './FilledGraphs/FilledGraphs'; 
 import SelectYearModal from "../Modal/SelectYearModal";
 
 ChartJS.register(
@@ -31,32 +22,39 @@ ChartJS.register(
 
 const OverheadAnalytics = () => {
   const [showChart, setShowChart] = useState(false);
-  const [chartData, setChartData] = useState([]);
-  const [showYearModal, setShowYearModal] = useState(false);
-  const [selectedYear, setSelectedYear] = useState(null);
-
+  const [showModal, setShowModal] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const chartRef = useRef();
 
   useEffect(() => {
-    if (selectedYear) {
-      fetch(`https://enterpizemate.dyzoon.dev/api/analytics/get-costs`)
-        .then(response => response.json())
-        .then(data => {
-          const summ = Object.entries(data).map(([key, value]) => value.summ);
-          setChartData(summ);
-          setShowChart(true); 
-        })
-        .catch(error => console.error('Failed to fetch data', error));
-    }
-  }, [selectedYear]);
+    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
+      .then(response => response.json())
+      .then(data => {
+        setAllData(data); // Store all data fetched
+      })
+      .catch(error => console.error('Failed to fetch data', error));
+  }, []);
 
-  const handleShowGraph = () => {
-    setShowYearModal(true);
+  useEffect(() => {
+    // Filter data based on the selected year
+    const filtered = Object.entries(allData).filter(([key, value]) => new Date(key).getFullYear() === selectedYear).map(([key, value]) => value.summ);
+    setFilteredData(filtered);
+  }, [selectedYear, allData]);
+
+  const handleShowChart = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   const handleSelectYear = (year) => {
     setSelectedYear(year);
-    setShowYearModal(false);
+    setShowModal(false);
+    setShowChart(true);
   };
 
   const data = {
@@ -67,7 +65,7 @@ const OverheadAnalytics = () => {
     datasets: [
       {
         label: "Сумма накладных расходов в тыс. руб.",
-        data: chartData, 
+        data: filteredData,
         fill: false,
         backgroundColor: "rgb(253, 119, 112)",
         borderColor: "rgba(253, 119, 112, 0.3)",
@@ -99,12 +97,12 @@ const OverheadAnalytics = () => {
   return (
     <AnalyticsWrapper activeTab="overhead-analytics">
       <FilledGraphs />
-      <Button text="Показать график" onClick={handleShowGraph} />
-      <SelectYearModal
-        isActive={showYearModal}
-        onSelectYear={handleSelectYear}
-        onClose={() => setShowYearModal(false)}
-      />
+      {!showChart && (
+        <>
+          <Button text="Показать график" onClick={handleShowChart} />
+          <SelectYearModal isOpen={showModal} onClose={handleCloseModal} onSelectYear={handleSelectYear} />
+        </>
+      )}
       {showChart && (
         <div className="chart__container">
           <div ref={chartRef} className="chart">

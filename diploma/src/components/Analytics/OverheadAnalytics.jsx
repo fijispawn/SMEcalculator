@@ -24,7 +24,7 @@ const OverheadAnalytics = () => {
   const [showChart, setShowChart] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [allData, setAllData] = useState([]);
+  const [allData, setAllData] = useState({});
   const [filteredData, setFilteredData] = useState([]);
   const chartRef = useRef();
 
@@ -32,18 +32,21 @@ const OverheadAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then(response => response.json())
       .then(data => {
-        setAllData(data); 
+        // Initialize an array with 12 nulls (for each month)
+        const initData = Array(12).fill(null);
+        Object.entries(data).forEach(([date, { summ }]) => {
+          const month = new Date(date).getMonth(); // Get month index from date
+          if (new Date(date).getFullYear() === selectedYear) {
+            initData[month] = summ; // Place summ in the correct month slot
+          }
+        });
+        setAllData(data);
+        setFilteredData(initData);
       })
       .catch(error => console.error('Failed to fetch data', error));
-  }, []);
-
-  useEffect(() => {
-    const filtered = Object.entries(allData).filter(([key, value]) => new Date(key).getFullYear() === selectedYear).map(([key, value]) => value.summ);
-    setFilteredData(filtered);
-  }, [selectedYear, allData]);
+  }, [selectedYear]);
 
   const handleShowChart = () => {
-    console.log('Opening modal...');
     setShowModal(true);
   };
 
@@ -96,14 +99,7 @@ const OverheadAnalytics = () => {
 
   return (
     <AnalyticsWrapper activeTab="overhead-analytics">
-      <FilledGraphs />
-      {!showChart && (
-        <>
-          <Button text="Показать график" onClick={handleShowChart} />
-          <SelectYearModal isOpen={showModal} onClose={handleCloseModal} onSelectYear={handleSelectYear} />
-        </>
-      )}
-      {showChart && (
+      {showChart ? (
         <div className="chart__container">
           <div ref={chartRef} className="chart">
             <Line data={data} options={options} />
@@ -112,6 +108,12 @@ const OverheadAnalytics = () => {
             Скачать график <FaRegFilePdf />
           </Button>
         </div>
+      ) : (
+        <>
+          <FilledGraphs />
+          <Button text="Показать график" onClick={handleShowChart} />
+          <SelectYearModal isOpen={showModal} onClose={handleCloseModal} onSelectYear={handleSelectYear} />
+        </>
       )}
     </AnalyticsWrapper>
   );

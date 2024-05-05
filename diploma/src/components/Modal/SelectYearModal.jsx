@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
-import styles from './MonthModal.module.css'
+import styles from './SelectYearModal.module.css';
+import Button from '../Button/Button';
 
 const SelectYearModal = ({ isOpen, onClose, onSelectYear }) => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-
-  const years = Array.from({ length: 10 }, (_, index) => new Date().getFullYear() - index);
+  const years = Array.from({ length: 10 }, (_, index) => new Date().getFullYear() + index);
 
   if (!isOpen) {
     return null;
   }
 
   return (
-    <div className={styles.modal}>
-      <div className={styles.content}>
+    <div className={`${styles.modal} ${isOpen ? styles.active : ''}`}>
+      <div className={styles.content} onClick={e => e.stopPropagation()}>
         <h2>Выберите за какой год показать график</h2>
-        <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)}>
+        <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)} className={styles.select}>
           {years.map(year => (
             <option key={year} value={year}>{year}</option>
           ))}
         </select>
-        <button onClick={() => onSelectYear(selectedYear)}>Select</button>
-        <button onClick={onClose}>Close</button>
+        <div className={styles.buttons}>
+          <Button text={"Выбрать"} onClick={() => onSelectYear(selectedYear)} />
+          <Button text={'Закрыть'} ghost={true} onClick={onClose} />
+        </div>
       </div>
     </div>
   );
 };
-
 
 export default SelectYearModal;

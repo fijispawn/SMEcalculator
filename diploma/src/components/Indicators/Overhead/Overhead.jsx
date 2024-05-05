@@ -4,10 +4,12 @@ import { IndicatorsWrapper } from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
 import Calendar from "../../Modal/Calendar.jsx";
 import Button from "../../Button/Button.jsx";
 import dayjs from "dayjs";
+import MessageModal from "../../Modal/MessageModal.jsx";
 
 const Overhead = () => {
   const [modalActive, setModalActive] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [showSaveMessageModal, setShowSaveMessageModal] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState({
     month: "Календарь",
@@ -99,7 +101,11 @@ const Overhead = () => {
           setSaveMessage(
             `Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`
           );
-          setTimeout(() => setSaveMessage(""), 3000);
+          setShowSaveMessageModal(true);
+          setTimeout(() => {
+            setSaveMessage("");
+            setShowSaveMessageModal(false);
+          }, 3000);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -140,6 +146,12 @@ const Overhead = () => {
         />
       </div>
       {saveMessage && <div className="save__message">{saveMessage}</div>}
+      <MessageModal
+        isActive={showSaveMessageModal}
+        onClose={() => setShowSaveMessageModal(false)}
+      >
+        <p>{saveMessage}</p>
+      </MessageModal>
     </IndicatorsWrapper>
   );
 };

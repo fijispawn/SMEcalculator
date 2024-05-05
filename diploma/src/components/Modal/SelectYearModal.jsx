@@ -10,9 +10,13 @@ const SelectYearModal = ({ isOpen, onClose, onSelectYear }) => {
     return null;
   }
 
+  const handleContentClick = e => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className={`${styles.modal} ${isOpen ? styles.active : ''}`}>
-      <div className={styles.content} onClick={e => e.stopPropagation()}>
+    <div className={`${styles.modal} ${isOpen ? styles.active : ''}`} onClick={onClose}>
+      <div className={styles.content} onClick={handleContentClick}>
         <h2>Выберите за какой год показать график</h2>
         <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)} className={styles.select}>
           {years.map(year => (
@@ -21,7 +25,7 @@ const SelectYearModal = ({ isOpen, onClose, onSelectYear }) => {
         </select>
         <div className={styles.buttons}>
           <Button text={"Выбрать"} onClick={() => onSelectYear(selectedYear)} />
-          <Button text={'Закрыть'} ghost={true} onClick={onClose} />
+          <Button text={"Закрыть"} onClick={onClose} />
         </div>
       </div>
     </div>

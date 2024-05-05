@@ -32,19 +32,23 @@ const OverheadAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then(response => response.json())
       .then(data => {
-        // Initialize an array with 12 nulls (for each month)
-        const initData = Array(12).fill(null);
-        Object.entries(data).forEach(([date, { summ }]) => {
-          const month = new Date(date).getMonth(); // Get month index from date
-          if (new Date(date).getFullYear() === selectedYear) {
-            initData[month] = summ; // Place summ in the correct month slot
-          }
-        });
-        setAllData(data);
-        setFilteredData(initData);
+        setAllData(data); // Store all data
       })
       .catch(error => console.error('Failed to fetch data', error));
-  }, [selectedYear]);
+  }, []);
+
+  useEffect(() => {
+    // Update filtered data based on the selected year
+    const initData = Array(12).fill(null);
+    Object.entries(allData).forEach(([date, { summ }]) => {
+      const year = new Date(date).getFullYear();
+      const month = new Date(date).getMonth();
+      if (year === selectedYear) {
+        initData[month] = summ;
+      }
+    });
+    setFilteredData(initData);
+  }, [selectedYear, allData]); // Depend on selectedYear and allData
 
   const handleShowChart = () => {
     setShowModal(true);

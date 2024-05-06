@@ -41,23 +41,27 @@ const OverheadAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then(response => response.json())
       .then(data => {
-        console.log('All fetched data:', data); // Log all fetched data to check it.
+        console.log('All fetched data:', data); // Log all fetched data for verification.
         const initData = Array(12).fill(null);
-        Object.entries(data).forEach(([date, { summ }]) => {
-          const year = new Date(date).getFullYear();
-          const month = new Date(date).getMonth();
+  
+        Object.entries(data).forEach(([key, value]) => {
+          const date = new Date(value.date); // Assuming `date` is the key in each data entry
+          const year = date.getFullYear();
+          const month = date.getMonth(); // getMonth() returns month index (0-11)
+  
           if (year === selectedYear) {
-            initData[month] = summ;
+            initData[month] = value.summ; // Assuming `summ` holds the data value you need
           }
         });
-
-        console.log(`Data for ${selectedYear}:`, initData); // Verify processed data for the selected year
-
+  
+        console.log(`Data for ${selectedYear}:`, initData); // Check the processed data
+  
         setFilteredData(initData);
         setHasData(initData.some(value => value !== null));
       })
       .catch(error => console.error('Failed to fetch data', error));
   }, [selectedYear]);
+  
 
   const handleShowChart = () => {
     setShowModal(true);

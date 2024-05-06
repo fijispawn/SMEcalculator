@@ -41,6 +41,7 @@ const OverheadAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then(response => response.json())
       .then(data => {
+        console.log('All fetched data:', data); // Log all fetched data to check it.
         const initData = Array(12).fill(null);
         Object.entries(data).forEach(([date, { summ }]) => {
           const year = new Date(date).getFullYear();
@@ -50,8 +51,7 @@ const OverheadAnalytics = () => {
           }
         });
 
-        console.log(`Data for ${selectedYear}:`, initData);
-
+        console.log(`Data for ${selectedYear}:`, initData); // Verify processed data for the selected year
 
         setFilteredData(initData);
         setHasData(initData.some(value => value !== null));
@@ -69,7 +69,6 @@ const OverheadAnalytics = () => {
 
   const handleSelectYear = (year) => {
     console.log(`Year selected: ${year}`);
-
     setSelectedYear(year);
     setShowModal(false);
     setShowChart(true);
@@ -135,6 +134,7 @@ const OverheadAnalytics = () => {
 };
 
 export default OverheadAnalytics;
+
 
 // import React, { useState, useEffect, useRef } from "react";
 // import "../Indicators/Indicators.css";

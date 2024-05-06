@@ -49,6 +49,10 @@ const OverheadAnalytics = () => {
             initData[month] = summ;
           }
         });
+
+        console.log(`Data for ${selectedYear}:`, initData);
+
+
         setFilteredData(initData);
         setHasData(initData.some(value => value !== null));
       })
@@ -64,6 +68,8 @@ const OverheadAnalytics = () => {
   };
 
   const handleSelectYear = (year) => {
+    console.log(`Year selected: ${year}`);
+
     setSelectedYear(year);
     setShowModal(false);
     setShowChart(true);

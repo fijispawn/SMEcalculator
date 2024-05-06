@@ -156,4 +156,13 @@ input {
     position: fixed;
     left: 20px;
   }
+
+  .pdf {
+    position: fixed;
+    bottom: 80px;
+  }
+
+  .chart__label {
+   
+  }
 }

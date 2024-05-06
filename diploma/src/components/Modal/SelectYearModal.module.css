@@ -25,7 +25,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 20px;
+    padding: 10px;
+    gap: 10px;
     color: var(--font-color);
     box-shadow: 1px 2px 2px 2px var(--modal-shadow);
     border: 0.1px thin var(--modal-border);
@@ -44,21 +45,13 @@
     background-color: transparent;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid var(--modal-border);
   }
   
   button {
-    background-color: transparent;
-    color: var(--font-color);
-    border: 1px solid var(--font-color);
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  
-  button:hover {
     background-color: #fd7770;
     color: white;
     border: 1px solid #fd7770;
-    transition: 0.1s ease-in;
+    padding: 5px 10px;
+    border-radius: 5px;
   }
   

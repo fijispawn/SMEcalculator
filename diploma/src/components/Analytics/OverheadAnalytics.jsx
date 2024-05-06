@@ -44,7 +44,7 @@ const OverheadAnalytics = () => {
         const initData = Array(12).fill(null);  // Prepare an array for all months
 
         Object.entries(data).forEach(([key, value]) => {
-          const parsedDate = new Date(value.date); // Parse the date from each entry
+          const parsedDate = new Date(key); // Assume keys are dates like '2029-01-01'
           const year = parsedDate.getFullYear();
           const month = parsedDate.getMonth(); // Months are zero-indexed
 
@@ -53,9 +53,9 @@ const OverheadAnalytics = () => {
           }
         });
 
-        console.log(`Processed data for ${selectedYear}:`, initData); // Log to check data integrity
+        console.log(`Processed data for ${selectedYear}:`, initData);
         setFilteredData(initData);
-        setHasData(initData.some(value => value !== null)); // Check if any data exists
+        setHasData(initData.some(value => value !== null));
       })
       .catch(error => console.error('Failed to fetch data', error));
   }, [selectedYear]);

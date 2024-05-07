@@ -195,6 +195,16 @@ const Overhead = () => {
     patent: "",
   });
 
+  const inputNames = {
+    salary: "Зарплата сотрудникам",
+    bonus: "Доплаты сотрудникам",
+    salaryTaxes: "Зарплатные налоги",
+    rent: "Аренда помещения",
+    ads: "Реклама",
+    taxes: "Налоги",
+    patent: "Патент",
+  };
+
   const handleEdit = (data) => {
     setFormData(data);
     setModalActive(true);
@@ -287,12 +297,14 @@ const Overhead = () => {
         <Button
           text="Сохранить"
           onClick={handleSave}
-          disabled={isSaveDisabled}
+          disabled={Object.values(formData).every((value) => value.trim() === "") ||
+            selectedDate.month === "Календарь" ||
+            selectedDate.year === ""}
         />
         <Calendar
           active={modalActive}
           setActive={setModalActive}
-          updateDate={updateDate}
+          updateDate={(month, year) => setSelectedDate({ month, year })}
         />
       </div>
       {saveMessage && <div className="save__message">{saveMessage}</div>}
@@ -307,4 +319,3 @@ const Overhead = () => {
 };
 
 export default Overhead;
-

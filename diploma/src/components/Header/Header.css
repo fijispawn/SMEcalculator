@@ -52,3 +52,15 @@ text-align: right;
   color: #fd7770; 
 }
 
+.exit__button{
+  background-color: transparent;
+  transition: 0.1s ease-in;
+  color: var(--font-color);
+  border: 1px solid var(--font-color);
+}
+
+.exit__button:hover{
+  background-color: #fd7770;
+  transition: 0.1s ease-in;
+  border: 1px solid #fd7770;
+}

@@ -63,7 +63,7 @@ const HeaderIn = () => {
         <div className="account__header">
           <img src={Avatar} alt="avatar"></img>
           <span className="flex items-center justify-center">name</span>
-          <button onClick={() => setModalActive(true)}>Выход</button>
+          <button className='exit__button' onClick={() => setModalActive(true)}>Выход</button>
           <Exit active={modalActive} setActive={setModalActive} />
         </div>
       </div>

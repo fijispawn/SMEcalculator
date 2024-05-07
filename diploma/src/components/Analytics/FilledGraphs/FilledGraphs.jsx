@@ -27,6 +27,21 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
       });
   }, [setHasData]);
 
+  // useEffect(() => {
+  //   const mockData = {
+  //     "2024-03-01": { summ: 210, date: "2024-03-01" },
+  //     "2024-04-01": { summ: 310, date: "2024-04-01" },
+  //     "2025-01-01": { summ: 410, date: "2025-01-01" },
+  //     "2025-02-01": { summ: 510, date: "2025-02-01" },
+  //     "2026-03-01": { summ: 610, date: "2026-03-01" },
+  //     "2026-04-01": { summ: 710, date: "2026-04-01" }
+  //   };
+
+  //   setDates(mockData);
+  //   setHasData(Object.keys(mockData).length > 0);
+  // }, [setHasData]);
+
+
   if (Object.keys(dates).length === 0) {
     return <Empty />;
   }
@@ -36,7 +51,7 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
       {Object.entries(dates).map(([date, details], index) => (
         <div key={index} className={styles.container}>
           <span className="text-left">{date}</span>
-          <div onClick={() => onEdit({date, ...details})} className="flex justify-end items-center">
+          <div onClick={() => onEdit({date, ...details})} className="flex justify-end items-center cursor-pointer">
             <MdEdit  /> Изменить
           </div>
         </div>
@@ -46,57 +61,3 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
 };
 
 export default FilledGraphs;
-
-
-
-// import React, { useEffect, useState } from "react";
-// import styles from "./FilledGraphs.module.css";
-// import { MdEdit } from "react-icons/md";
-// import { FaTrashAlt } from "react-icons/fa";
-// import Empty from "./Empty";
-
-// const FilledGraphs = ({ setHasData }) => {
-//     const [dates, setDates] = useState({});
-
-//     useEffect(() => {
-//       const mockData = {
-//         '2024-01-01': { summ: 500 },
-//         '2024-02-01': { summ: 300 },
-//         '2024-03-01': { summ: 450 },
-//         '2024-04-01': { summ: 700 },
-//         '2024-08-01': { summ: 700 },
-//         '2025-01-01': { summ: 150 },
-//         '2025-02-01': { summ: 250 },
-//         '2025-03-01': { summ: 350 },
-//         '2026-01-01': { summ: 120 },
-//         '2026-02-01': { summ: 180 },
-//         '2026-03-01': { summ: 180 },
-//         '2026-04-01': { summ: 180 }
-//       };
-//         setTimeout(() => {
-//             setDates(mockData);
-//             setHasData(Object.keys(mockData).length > 0);
-//         }, 1000);  
-//     }, [setHasData]);
-
-//     if (Object.keys(dates).length === 0) {
-//         return <Empty />;
-//     }
-
-//     return (
-//         <div className={styles.wrapper}>
-//             {Object.entries(dates).map(([date, details], index) => (
-//                 <div key={index} className={styles.container}>
-//                     <span className="text-left">{date}</span>
-//                     <div className="flex justify-end items-center">
-//                         <MdEdit /> Изменить
-//                         <FaTrashAlt />
-//                     </div>
-//                 </div>
-//             ))}
-//         </div>
-//     );
-// };
-
-// export default FilledGraphs;
-

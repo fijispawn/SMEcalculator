@@ -2,7 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import "../Indicators/Indicators.css";
 import { AnalyticsWrapper } from "./AnalyticsWrapper/AnalyticsWrapper";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import Button from "../Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -11,7 +20,15 @@ import FilledGraphs from "./FilledGraphs/FilledGraphs";
 import SelectYearModal from "../Modal/SelectYearModal";
 import { useNavigate } from "react-router-dom"; // Import if you're using react-router
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const OverheadAnalytics = () => {
   const [showChart, setShowChart] = useState(false);
@@ -24,8 +41,8 @@ const OverheadAnalytics = () => {
 
   useEffect(() => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const initData = Array(12).fill(null); // Prepare an array for all months
 
         Object.entries(data).forEach(([key, value]) => {
@@ -40,9 +57,9 @@ const OverheadAnalytics = () => {
 
         console.log(`Processed data for ${selectedYear}:`, initData);
         setFilteredData(initData);
-        setHasData(initData.some(value => value !== null));
+        setHasData(initData.some((value) => value !== null));
       })
-      .catch(error => console.error('Failed to fetch data', error));
+      .catch((error) => console.error("Failed to fetch data", error));
   }, [selectedYear]);
 
   // useEffect(() => {
@@ -86,8 +103,18 @@ const OverheadAnalytics = () => {
 
   const data = {
     labels: [
-      "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
-      "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
     ],
     datasets: [
       {
@@ -122,7 +149,7 @@ const OverheadAnalytics = () => {
   };
 
   const handleEditData = (data) => {
-    navigate('/overhead', { state: data }); // Adjust as necessary for routing and state passing
+    navigate("/overhead", { state: data }); // Adjust as necessary for routing and state passing
   };
 
   return (
@@ -139,8 +166,16 @@ const OverheadAnalytics = () => {
       ) : (
         <>
           <FilledGraphs setHasData={setHasData} onEdit={handleEditData} />
-          <Button text="Показать график" onClick={handleShowChart} disabled={!hasData} />
-          <SelectYearModal isOpen={showModal} onClose={handleCloseModal} onSelectYear={handleSelectYear} />
+          <Button
+            text="Показать график"
+            onClick={handleShowChart}
+            disabled={!hasData}
+          />
+          <SelectYearModal
+            isOpen={showModal}
+            onClose={handleCloseModal}
+            onSelectYear={handleSelectYear}
+          />
         </>
       )}
     </AnalyticsWrapper>

@@ -9,13 +9,13 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
 
   useEffect(() => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
-      .then(response => {
+      .then((response) => {
         if (response.ok) {
           return response.json();
         }
         throw new Error("Network response was not ok.");
       })
-      .then(data => {
+      .then((data) => {
         console.log("Received data:", data);
         setDates(data);
         setHasData(Object.keys(data).length > 0);
@@ -41,7 +41,6 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
   //   setHasData(Object.keys(mockData).length > 0);
   // }, [setHasData]);
 
-
   if (Object.keys(dates).length === 0) {
     return <Empty />;
   }
@@ -51,8 +50,11 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
       {Object.entries(dates).map(([date, details], index) => (
         <div key={index} className={styles.container}>
           <span className="text-left">{date}</span>
-          <div onClick={() => onEdit({date, ...details})} className="edit">
-            <MdEdit  /> Изменить
+          <div
+            onClick={() => onEdit({ date, ...details })}
+            className={styles.edit}
+          >
+            <MdEdit /> Изменить
           </div>
         </div>
       ))}

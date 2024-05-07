@@ -36,9 +36,8 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
       {Object.entries(dates).map(([date, details], index) => (
         <div key={index} className={styles.container}>
           <span className="text-left">{date}</span>
-          <div className="flex justify-end items-center">
-            <MdEdit onClick={() => onEdit({date, ...details})} /> Изменить
-            <FaTrashAlt />
+          <div onClick={() => onEdit({date, ...details})} className="flex justify-end items-center">
+            <MdEdit  /> Изменить
           </div>
         </div>
       ))}
@@ -47,6 +46,7 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
 };
 
 export default FilledGraphs;
+
 
 
 // import React, { useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Indicators.css";
 import { IndicatorsWrapper } from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
 import Calendar from "../../Modal/Calendar.jsx";
@@ -6,7 +6,7 @@ import Button from "../../Button/Button.jsx";
 import dayjs from "dayjs";
 import MessageModal from "../../Modal/MessageModal.jsx";
 
-const Overhead = () => {
+const Overhead = ({ location }) => {
   const [modalActive, setModalActive] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [showSaveMessageModal, setShowSaveMessageModal] = useState(false);
@@ -35,6 +35,18 @@ const Overhead = () => {
     patent: "Патент",
   };
 
+  useEffect(() => {
+    if (location.state) {
+      const { date } = location.state;
+      const parsedDate = dayjs(date);
+      setSelectedDate({
+        month: parsedDate.format("MMMM"), // Localized month name
+        year: parsedDate.format("YYYY")
+      });
+      setFormData(location.state);
+    }
+  }, [location.state]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -56,26 +68,11 @@ const Overhead = () => {
         return acc;
       }, {});
 
-      const monthNamesToNumbers = {
-        Январь: 1,
-        Февраль: 2,
-        Март: 3,
-        Апрель: 4,
-        Май: 5,
-        Июнь: 6,
-        Июль: 7,
-        Август: 8,
-        Сентябрь: 9,
-        Октябрь: 10,
-        Ноябрь: 11,
-        Декабрь: 12,
-      };
-
-      const monthNumber = monthNamesToNumbers[selectedDate.month] || 0;
+      const monthNumber = dayjs().month(selectedDate.month).format("MM");
 
       const saveData = {
         ...numericFormData,
-        date: dayjs(`${selectedDate.year}-${monthNumber}`).format("YYYY-MM-DD"),
+        date: `${selectedDate.year}-${monthNumber}-01`, // Ensures correct date format
       };
 
       fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
@@ -106,9 +103,7 @@ const Overhead = () => {
             patent: "",
           });
           setSelectedDate({ month: "Календарь", year: "" });
-          setSaveMessage(
-            `Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`
-          );
+          setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
           setShowSaveMessageModal(true);
           setTimeout(() => {
             setSaveMessage("");
@@ -146,11 +141,12 @@ const Overhead = () => {
           onClick={handleSave}
           disabled={isSaveDisabled}
         />
-
         <Calendar
           active={modalActive}
           setActive={setModalActive}
           updateDate={updateDate}
+          initialMonth={selectedDate.month}
+          initialYear={selectedDate.year}
         />
       </div>
       {saveMessage && <div className="save__message">{saveMessage}</div>}

@@ -4,25 +4,21 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import MonthModal from "./MonthModal";
 import YearModal from "./YearModal";
 
-const Calendar = ({ active, setActive, updateDate }) => {
+const Calendar = ({ active, setActive, updateDate, initialMonth, initialYear }) => {
   const [modalActive, setModalActive] = useState(false);
   const [yearModalActive, setYearModalActive] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState("Месяц");
-  const [selectedYear, setSelectedYear] = useState("Год");
+  const [selectedMonth, setSelectedMonth] = useState(initialMonth || "Месяц");
+  const [selectedYear, setSelectedYear] = useState(initialYear || "Год");
 
   const handleClose = () => setActive(false);
 
   const handleSelectMonth = (month) => {
-    if (month) {
-      setSelectedMonth(month);
-    }
+    setSelectedMonth(month);
     setModalActive(false);
   };
 
   const handleSelectYear = (year) => {
-    if (year) {
-      setSelectedYear(year);
-    }
+    setSelectedYear(year);
     setYearModalActive(false);
   };
 

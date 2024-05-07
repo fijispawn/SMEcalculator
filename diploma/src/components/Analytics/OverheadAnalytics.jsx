@@ -2,32 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import "../Indicators/Indicators.css";
 import { AnalyticsWrapper } from "./AnalyticsWrapper/AnalyticsWrapper";
 import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import Button from "../Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
 import FilledGraphs from "./FilledGraphs/FilledGraphs";
 import SelectYearModal from "../Modal/SelectYearModal";
+import { useNavigate } from "react-router-dom"; // Import if you're using react-router
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const OverheadAnalytics = () => {
   const [showChart, setShowChart] = useState(false);
@@ -36,12 +20,13 @@ const OverheadAnalytics = () => {
   const [hasData, setHasData] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const chartRef = useRef();
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then(response => response.json())
       .then(data => {
-        const initData = Array(12).fill(null);  // Prepare an array for all months
+        const initData = Array(12).fill(null); // Prepare an array for all months
 
         Object.entries(data).forEach(([key, value]) => {
           const parsedDate = new Date(key); // Assume keys are dates like '2029-01-01'
@@ -111,6 +96,10 @@ const OverheadAnalytics = () => {
     });
   };
 
+  const handleEditData = (data) => {
+    navigate('/overhead', { state: data }); // Adjust as necessary for routing and state passing
+  };
+
   return (
     <AnalyticsWrapper activeTab="overhead-analytics">
       {showChart ? (
@@ -124,7 +113,7 @@ const OverheadAnalytics = () => {
         </div>
       ) : (
         <>
-          <FilledGraphs setHasData={setHasData} />
+          <FilledGraphs setHasData={setHasData} onEdit={handleEditData} />
           <Button text="Показать график" onClick={handleShowChart} disabled={!hasData} />
           <SelectYearModal isOpen={showModal} onClose={handleCloseModal} onSelectYear={handleSelectYear} />
         </>
@@ -134,6 +123,7 @@ const OverheadAnalytics = () => {
 };
 
 export default OverheadAnalytics;
+
 
 
 // import React, { useState, useEffect, useRef } from "react";

@@ -4,20 +4,28 @@ import { MdEdit } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
 import Empty from "./Empty";
 
-const FilledGraphs = ({ onEdit }) => {
+const FilledGraphs = ({ setHasData, onEdit }) => {
   const [dates, setDates] = useState({});
 
   useEffect(() => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
       .then(data => {
+        console.log("Received data:", data);
         setDates(data);
+        setHasData(Object.keys(data).length > 0);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setDates({});
+        setHasData(false);
       });
-  }, []);
+  }, [setHasData]);
 
   if (Object.keys(dates).length === 0) {
     return <Empty />;
@@ -26,10 +34,10 @@ const FilledGraphs = ({ onEdit }) => {
   return (
     <div className={styles.wrapper}>
       {Object.entries(dates).map(([date, details], index) => (
-        <div key={index} className={styles.container} onClick={() => onEdit(details)}>
+        <div key={index} className={styles.container}>
           <span className="text-left">{date}</span>
           <div className="flex justify-end items-center">
-            <MdEdit onClick={(e) => { e.stopPropagation(); onEdit(details); }} style={{ cursor: 'pointer' }} /> Изменить
+            <MdEdit onClick={() => onEdit({date, ...details})} /> Изменить
             <FaTrashAlt />
           </div>
         </div>
@@ -39,6 +47,7 @@ const FilledGraphs = ({ onEdit }) => {
 };
 
 export default FilledGraphs;
+
 
 // import React, { useEffect, useState } from "react";
 // import styles from "./FilledGraphs.module.css";

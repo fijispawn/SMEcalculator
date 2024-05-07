@@ -23,6 +23,7 @@
   height: 30px;
   font-size: 20px;
   color: var(--font-color);
+  border:none;
 }
 
 .button:hover{

@@ -55,6 +55,7 @@ h1 {
   height: 50px;
   background-color: transparent;
   color: var(--font-color);
+  border:none;
 }
 
 .button:hover {

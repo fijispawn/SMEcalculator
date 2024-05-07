@@ -29,12 +29,23 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
 
   // useEffect(() => {
   //   const mockData = {
-  //     "2024-03-01": { summ: 210, date: "2024-03-01" },
+  //     "2024-03-01": {
+  //       ads: 3,
+  //       bonus: 3,
+  //       date: "2024-03-01",
+  //       login: "1@mail.ru",
+  //       patent: 3,
+  //       rent: 3,
+  //       salary: 3,
+  //       salaryTaxes: 3,
+  //       summ: 21,
+  //       taxes: 3,
+  //     },
   //     "2024-04-01": { summ: 310, date: "2024-04-01" },
   //     "2025-01-01": { summ: 410, date: "2025-01-01" },
   //     "2025-02-01": { summ: 510, date: "2025-02-01" },
   //     "2026-03-01": { summ: 610, date: "2026-03-01" },
-  //     "2026-04-01": { summ: 710, date: "2026-04-01" }
+  //     "2026-04-01": { summ: 710, date: "2026-04-01" },
   //   };
 
   //   setDates(mockData);

@@ -48,16 +48,16 @@ const Overhead = () => {
         month: parsedDate.format("MMMM"), // Localized month name
         year: parsedDate.format("YYYY")
       });
-      // Filter out any non-editable data like date, summ, login etc.
       const editableFields = Object.keys(rest).reduce((obj, key) => {
         if (key in inputNames) {
-          obj[key] = rest[key];
+          obj[key] = String(rest[key]); // Ensure all values are strings
         }
         return obj;
       }, {});
       setFormData(editableFields);
     }
   }, [location]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "../Indicators.css";
-import { useLocation } from "react-router-dom"; // Make sure to import useLocation
+import { useLocation } from "react-router-dom";
 import { IndicatorsWrapper } from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
 import Calendar from "../../Modal/Calendar.jsx";
 import Button from "../../Button/Button.jsx";
 import dayjs from "dayjs";
 import MessageModal from "../../Modal/MessageModal.jsx";
 
+dayjs.locale('ru');
+
 const Overhead = () => {
-  const location = useLocation(); // Using the hook to get location, do not pass as a prop
+  const location = useLocation(); // Using the hook to get location
 
   const [modalActive, setModalActive] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -39,14 +41,21 @@ const Overhead = () => {
   };
 
   useEffect(() => {
-    if (location.state) { // Checking if location.state exists
-      const { date } = location.state;
+    if (location.state) {
+      const { date, ...rest } = location.state;
       const parsedDate = dayjs(date);
       setSelectedDate({
         month: parsedDate.format("MMMM"), // Localized month name
         year: parsedDate.format("YYYY")
       });
-      setFormData(location.state); // Assuming all data necessary is passed here
+      // Filter out any non-editable data like date, summ, login etc.
+      const editableFields = Object.keys(rest).reduce((obj, key) => {
+        if (key in inputNames) {
+          obj[key] = rest[key];
+        }
+        return obj;
+      }, {});
+      setFormData(editableFields);
     }
   }, [location]);
 
@@ -75,7 +84,7 @@ const Overhead = () => {
 
       const saveData = {
         ...numericFormData,
-        date: `${selectedDate.year}-${monthNumber}-01`, // Ensures correct date format
+        date: `${selectedDate.year}-${monthNumber}-01`,
       };
 
       fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
@@ -96,16 +105,10 @@ const Overhead = () => {
         })
         .then((data) => {
           console.log("Success:", data);
-          setFormData({
-            salary: "",
-            bonus: "",
-            salaryTaxes: "",
-            rent: "",
-            ads: "",
-            taxes: "",
-            patent: "",
+          // Clear the form data
+          Object.keys(formData).forEach(key => {
+            formData[key] = "";
           });
-          setSelectedDate({ month: "Календарь", year: "" });
           setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
           setShowSaveMessageModal(true);
           setTimeout(() => {
@@ -148,6 +151,8 @@ const Overhead = () => {
           active={modalActive}
           setActive={setModalActive}
           updateDate={updateDate}
+          initialMonth={selectedDate.month}
+          initialYear={selectedDate.year}
         />
       </div>
       {saveMessage && <div className="save__message">{saveMessage}</div>}

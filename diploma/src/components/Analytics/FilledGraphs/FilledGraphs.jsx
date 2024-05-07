@@ -51,7 +51,7 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
       {Object.entries(dates).map(([date, details], index) => (
         <div key={index} className={styles.container}>
           <span className="text-left">{date}</span>
-          <div onClick={() => onEdit({date, ...details})} className="flex justify-end items-center cursor-pointer">
+          <div onClick={() => onEdit({date, ...details})} className="edit">
             <MdEdit  /> Изменить
           </div>
         </div>

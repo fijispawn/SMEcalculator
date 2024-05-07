@@ -174,7 +174,7 @@ import Calendar from "../../Modal/Calendar.jsx";
 import Button from "../../Button/Button.jsx";
 import dayjs from "dayjs";
 import MessageModal from "../../Modal/MessageModal.jsx";
-import FilledGraphs from "./FilledGraphs.jsx"; // Ensure correct import path
+import FilledGraphs from "../../Analytics/FilledGraphs/FilledGraphs.jsx";
 
 const Overhead = () => {
   const [modalActive, setModalActive] = useState(false);

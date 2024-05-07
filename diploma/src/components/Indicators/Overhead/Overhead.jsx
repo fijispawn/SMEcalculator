@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../Indicators.css";
+import { useLocation } from "react-router-dom"; // Make sure to import useLocation
 import { IndicatorsWrapper } from "../IndicatorsWrapper/IndicatorsWrapper.jsx";
 import Calendar from "../../Modal/Calendar.jsx";
 import Button from "../../Button/Button.jsx";
 import dayjs from "dayjs";
 import MessageModal from "../../Modal/MessageModal.jsx";
 
-const Overhead = ({ location }) => {
+const Overhead = () => {
+  const location = useLocation(); // Using the hook to get location, do not pass as a prop
+
   const [modalActive, setModalActive] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [showSaveMessageModal, setShowSaveMessageModal] = useState(false);
@@ -36,16 +39,16 @@ const Overhead = ({ location }) => {
   };
 
   useEffect(() => {
-    if (location.state) {
+    if (location.state) { // Checking if location.state exists
       const { date } = location.state;
       const parsedDate = dayjs(date);
       setSelectedDate({
         month: parsedDate.format("MMMM"), // Localized month name
         year: parsedDate.format("YYYY")
       });
-      setFormData(location.state);
+      setFormData(location.state); // Assuming all data necessary is passed here
     }
-  }, [location.state]);
+  }, [location]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -145,8 +148,6 @@ const Overhead = ({ location }) => {
           active={modalActive}
           setActive={setModalActive}
           updateDate={updateDate}
-          initialMonth={selectedDate.month}
-          initialYear={selectedDate.year}
         />
       </div>
       {saveMessage && <div className="save__message">{saveMessage}</div>}

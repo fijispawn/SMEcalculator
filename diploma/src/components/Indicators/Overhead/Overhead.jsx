@@ -7,8 +7,6 @@ import Button from "../../Button/Button.jsx";
 import dayjs from "dayjs";
 import MessageModal from "../../Modal/MessageModal.jsx";
 
-dayjs.locale('ru');
-
 const Overhead = () => {
   const location = useLocation(); // Using the hook to get location
 
@@ -30,6 +28,25 @@ const Overhead = () => {
     patent: "",
   });
 
+  const monthMap = {
+    январь: "01",
+    февраль: "02",
+    март: "03",
+    апрель: "04",
+    май: "05",
+    июнь: "06",
+    июль: "07",
+    август: "08",
+    сентябрь: "09",
+    октябрь: "10",
+    ноябрь: "11",
+    декабрь: "12",
+  };
+
+  const getMonthNumber = (monthName) => {
+    return monthMap[monthName.toLowerCase()] || "01";  // default to January if not found
+  };
+
   const inputNames = {
     salary: "Зарплата сотрудникам",
     bonus: "Доплаты сотрудникам",
@@ -46,7 +63,7 @@ const Overhead = () => {
       const parsedDate = dayjs(date);
       setSelectedDate({
         month: parsedDate.format("MMMM"), // Localized month name
-        year: parsedDate.format("YYYY")
+        year: parsedDate.format("YYYY"),
       });
       const editableFields = Object.keys(rest).reduce((obj, key) => {
         if (key in inputNames) {
@@ -57,7 +74,6 @@ const Overhead = () => {
       setFormData(editableFields);
     }
   }, [location]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,10 +96,10 @@ const Overhead = () => {
           return acc;
         }, {});
     
-        // Attempt to create the date using the full date string and format it correctly
-        // Assuming selectedDate.month is the full month name in Russian and selectedDate.year is the year
-        const dateString = `${selectedDate.year}-${dayjs().month(selectedDate.month).format('MM')}-01`;
-        const formattedDate = dayjs(dateString, 'YYYY-MM-DD').format('YYYY-MM-DD');
+        // Directly use numerical values or convert from a map if using names
+        const monthNumber = getMonthNumber(selectedDate.month);  // This needs to be defined based on your app's logic
+        const dateString = `${selectedDate.year}-${monthNumber}-01`;
+        const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid() ? dateString : "Invalid Date";
     
         const saveData = {
           ...numericFormData,
@@ -97,31 +113,28 @@ const Overhead = () => {
           },
           body: JSON.stringify(saveData),
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok.");
-            }
-            return response.text();
-          })
-          .then((text) => {
-            return text ? JSON.parse(text) : {};
-          })
-          .then((data) => {
-            console.log("Success:", data);
-            // Clear the form data
-            Object.keys(formData).forEach(key => {
-              formData[key] = "";
-            });
-            setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
-            setShowSaveMessageModal(true);
-            setTimeout(() => {
-              setSaveMessage("");
-              setShowSaveMessageModal(false);
-            }, 3000);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok.");
+          }
+          return response.text();
+        })
+        .then(text => {
+          return text ? JSON.parse(text) : {};
+        })
+        .then(data => {
+          console.log("Success:", data);
+          Object.keys(formData).forEach(key => formData[key] = "");
+          setSaveMessage(`Data for ${selectedDate.month} ${selectedDate.year} saved.`);
+          setShowSaveMessageModal(true);
+          setTimeout(() => {
+            setSaveMessage("");
+            setShowSaveMessageModal(false);
+          }, 3000);
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
       }
     };
     

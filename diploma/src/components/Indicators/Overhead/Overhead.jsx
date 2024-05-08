@@ -73,54 +73,58 @@ const Overhead = () => {
     selectedDate.month === "Календарь" ||
     selectedDate.year === "";
 
-  const handleSave = () => {
-    if (!isSaveDisabled) {
-      const numericFormData = Object.keys(formData).reduce((acc, key) => {
-        acc[key] = formData[key] ? Number(formData[key]) : 0;
-        return acc;
-      }, {});
-
-      const monthNumber = dayjs().month(selectedDate.month).format("MM");
-
-      const saveData = {
-        ...numericFormData,
-        date: `${selectedDate.year}-${monthNumber}-01`,
-      };
-
-      fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(saveData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok.");
-          }
-          return response.text();
+    const handleSave = () => {
+      if (!isSaveDisabled) {
+        const numericFormData = Object.keys(formData).reduce((acc, key) => {
+          acc[key] = formData[key] ? Number(formData[key]) : 0;
+          return acc;
+        }, {});
+    
+        // Attempt to create the date using the full date string and format it correctly
+        // Assuming selectedDate.month is the full month name in Russian and selectedDate.year is the year
+        const dateString = `${selectedDate.year}-${dayjs().month(selectedDate.month).format('MM')}-01`;
+        const formattedDate = dayjs(dateString, 'YYYY-MM-DD').format('YYYY-MM-DD');
+    
+        const saveData = {
+          ...numericFormData,
+          date: formattedDate,
+        };
+    
+        fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(saveData),
         })
-        .then((text) => {
-          return text ? JSON.parse(text) : {};
-        })
-        .then((data) => {
-          console.log("Success:", data);
-          // Clear the form data
-          Object.keys(formData).forEach(key => {
-            formData[key] = "";
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok.");
+            }
+            return response.text();
+          })
+          .then((text) => {
+            return text ? JSON.parse(text) : {};
+          })
+          .then((data) => {
+            console.log("Success:", data);
+            // Clear the form data
+            Object.keys(formData).forEach(key => {
+              formData[key] = "";
+            });
+            setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
+            setShowSaveMessageModal(true);
+            setTimeout(() => {
+              setSaveMessage("");
+              setShowSaveMessageModal(false);
+            }, 3000);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
           });
-          setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
-          setShowSaveMessageModal(true);
-          setTimeout(() => {
-            setSaveMessage("");
-            setShowSaveMessageModal(false);
-          }, 3000);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-  };
+      }
+    };
+    
 
   return (
     <IndicatorsWrapper activeTab="overhead">

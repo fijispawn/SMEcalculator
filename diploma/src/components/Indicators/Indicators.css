@@ -126,7 +126,7 @@ input {
   .naming__style {
     display: flex;
     margin: 0;
-    padding: 6px;
+    padding: 2px;
     font-size: 16px;
   }
   .button__container {

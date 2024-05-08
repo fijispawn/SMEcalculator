@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { AccountWrapper } from "../AccountWrapper/AccountWrapper";
 import "../Account.css";
 import { useTheme } from "../../../hooks/useTheme";
-import LightTheme from "../../../assets/lightTheme.svg";
-import { FaMoon } from "react-icons/fa";
-
-import { FaSun } from "react-icons/fa";
-
-import DarkTheme from "../../../assets/darkTheme.svg";
+import LightTheme from "../../../assets/lightThemeMob.svg";  // Path might need adjustment
+import DarkTheme from "../../../assets/darkThemeMob.svg";   // Path might need adjustment
 import { FaLock } from "react-icons/fa6";
 
 const SecurityMobile = () => {
@@ -39,24 +35,28 @@ const SecurityMobile = () => {
     <AccountWrapper activeTab="security">
       <div className="account__wrapper">
         <div className="theme__toggle">
-          <p>Сменить Тему</p>
+          <p>Сменить тему</p>
           {theme === "light" ? (
-            <FaSun
+            <img
+              src={DarkTheme}  // Image for dark theme toggle
+              alt="Toggle Dark Theme"
               className="w-10 cursor-pointer"
               onClick={handleDarkThemeClick}
             />
           ) : (
-            <FaMoon
+            <img
+              src={LightTheme}  // Image for light theme toggle
+              alt="Toggle Light Theme"
               className="w-10 cursor-pointer"
               onClick={handleLightThemeClick}
             />
           )}
         </div>
+        <div className="change__password">
+          <FaLock />
+          <p>Сменить пароль</p>
+        </div>
         <div className="account">
-          <div className="change__password">
-            <p>Сменить пароль</p>
-            <FaLock />
-          </div>
           <form className="form" onSubmit={handleSubmit}>
             <input
               type="password"

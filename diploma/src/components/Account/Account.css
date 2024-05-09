@@ -56,14 +56,19 @@
 
 .edited {
   display: flex;
-  text-align: center;
-  gap: 15px;
+  gap: 16px;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 10px;
+  padding: 20px;
   border: solid 1px var(--font-color);
   border-radius: 30px;
+}
+
+.user__info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: end;
 }
 
 .theme__toggle {

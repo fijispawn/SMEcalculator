@@ -13,6 +13,8 @@ import { useTheme } from "../../hooks/useTheme";
 import Exit from "../Modal/Exit";
 
 const HeaderIn = () => {
+
+  const { userName } = useUser(); // Use the context value
   const { theme, setTheme } = useTheme();
   const handleLightThemeClick = () => {
     setTheme("light");
@@ -62,7 +64,7 @@ const HeaderIn = () => {
         </Link>
         <div className="account__header">
           <img src={Avatar} alt="avatar"></img>
-          <span className="flex items-center justify-center">name</span>
+          <span className="flex items-center justify-center">{userName}</span> 
           <button className='exit__button' onClick={() => setModalActive(true)}>Выход</button>
           <Exit active={modalActive} setActive={setModalActive} />
         </div>

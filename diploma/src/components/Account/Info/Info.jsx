@@ -25,7 +25,7 @@ const Account = () => {
 
   const fetchUserInfo = () => {
     const userLogin = localStorage.getItem("userLogin"); // Assuming 'userLogin' is stored in localStorage
-    fetch(`https://enterpizemate.dyzoon.dev/api/registration/account-info/${userLogin}`, {
+    fetch(`https://enterpizemate.dyzoon.dev/api/registration/account-info/`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",

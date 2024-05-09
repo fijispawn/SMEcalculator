@@ -24,25 +24,25 @@ const Account = () => {
   };
 
   const fetchUserInfo = () => {
-    const userLogin = localStorage.getItem("userLogin"); // Assuming 'userLogin' is stored in localStorage
+    const userLogin = localStorage.getItem("userLogin");
     fetch(`https://enterpizemate.dyzoon.dev/api/registration/account-info/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include',
+      credentials: "include",
     })
-    .then((response) => {
+    .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       return response.json();
     })
-    .then((data) => {
+    .then(data => {
       setUserInfo(data);
     })
-    .catch((error) => {
-      console.error("There has been a problem with fetching user info:", error);
+    .catch(error => {
+      console.error("Problem fetching user info:", error);
     });
   };
 
@@ -53,7 +53,6 @@ const Account = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const userLogin = localStorage.getItem("userLogin");
-
     const updatedData = { ...form, login: userLogin };
 
     fetch("https://enterpizemate.dyzoon.dev/api/registration/account-info/update", {
@@ -62,20 +61,21 @@ const Account = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedData),
-      credentials: 'include',
+      credentials: "include",
     })
-    .then((response) => {
+    .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       return response.json();
     })
-    .then((data) => {
-      setUserInfo(form); // Update the displayed user info with the submitted form data
-      setIsEditing(false); // Hide the form after updating
+    .then(() => {
+      setUserInfo(form); // Directly update the displayed user info with the submitted form data
+      setIsEditing(false);
+      fetchUserInfo(); // Optionally refetch data from the server
     })
-    .catch((error) => {
-      console.error("There has been a problem with your fetch operation:", error);
+    .catch(error => {
+      console.error("Error updating user info:", error);
     });
   };
 
@@ -85,60 +85,33 @@ const Account = () => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    fetchUserInfo(); // Refresh user info when cancelling editing
+    setForm(userInfo); // Reset form to initial user info
   };
 
   return (
     <AccountWrapper activeTab="account">
       <div className="account__wrapper">
         <AccountData name={userInfo.name} surname={userInfo.surname} />
-        <div className="user-info">
-          {Object.keys(userInfo).length ? (
-            <>
-              <div className="edited">
-                <span>Имя: {userInfo.name}</span>
-                <span>Фамилия: {userInfo.surname}</span>
-                <span>Название предприятия: {userInfo.companyName}</span>
-                <span>Доход с начала года (в руб): {userInfo.yield}</span>
-              </div>
-              {!isEditing && (
-                <Button text="Изменить" onClick={handleEditClick}/>
-              )}
-            </>
-          ) : (
-            <span className="w-[280px] text-xl" >Отсутствует информация о пользователе</span>
-          )}
-        </div>
-        {isEditing && (
+        {isEditing ? (
           <div className="account-form">
             <form className="form" onSubmit={handleSubmit}>
-              <input
-                name="name"
-                onChange={handleChange}
-                value={form.name}
-                placeholder="Имя"
-              />
-              <input
-                name="surname"
-                onChange={handleChange}
-                value={form.surname}
-                placeholder="Фамилия"
-              />
-              <input
-                name="companyName"
-                onChange={handleChange}
-                value={form.companyName}
-                placeholder="Название предприятия"
-              />
-              <input
-                name="yield"
-                onChange={handleChange}
-                value={form.yield}
-                placeholder="Доход с начала года (в руб)"
-              />
-              <Button text="Сохранить" disabled={allFieldsEmpty()}/>
-              <Button text="Отменить" onClick={handleCancelClick}/>
+              <input name="name" onChange={handleChange} value={form.name} placeholder="Имя" />
+              <input name="surname" onChange={handleChange} value={form.surname} placeholder="Фамилия" />
+              <input name="companyName" onChange={handleChange} value={form.companyName} placeholder="Название предприятия" />
+              <input name="yield" onChange={handleChange} value={form.yield} placeholder="Доход с начала года (в руб)" />
+              <Button text="Отменить" onClick={handleCancelClick} />
+              <Button text="Сохранить" disabled={allFieldsEmpty()} />
             </form>
+          </div>
+        ) : (
+          <div className="user-info">
+            <div className="edited">
+              <span>Имя: {userInfo.name}</span>
+              <span>Фамилия: {userInfo.surname}</span>
+              <span>Название предприятия: {userInfo.companyName}</span>
+              <span>Доход с начала года (в руб): {userInfo.yield}</span>
+            </div>
+            <Button text="Изменить" onClick={handleEditClick} />
           </div>
         )}
       </div>

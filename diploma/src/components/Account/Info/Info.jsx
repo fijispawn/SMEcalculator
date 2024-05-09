@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Account.css";
 import { AccountWrapper } from "../AccountWrapper/AccountWrapper";
 import AccountData from "../AccountData";
@@ -9,8 +9,8 @@ const Account = () => {
   const [form, setForm] = useState({
     name: "",
     surname: "",
-    company: "",
-    income: "",
+    companyName: "",
+    yield: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -22,6 +22,33 @@ const Account = () => {
   const allFieldsEmpty = () => {
     return Object.values(form).every(field => field.trim() === "");
   };
+
+  const fetchUserInfo = () => {
+    const userLogin = localStorage.getItem("userLogin"); // Assuming 'userLogin' is stored in localStorage
+    fetch(`https://enterpizemate.dyzoon.dev/api/registration/account-info/${userLogin}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: 'include',
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setUserInfo(data);
+    })
+    .catch((error) => {
+      console.error("There has been a problem with fetching user info:", error);
+    });
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,41 +83,34 @@ const Account = () => {
     setIsEditing(true);
   };
 
-  const displayUserInfo = () => {
-    if (Object.values(userInfo).some(value => value.trim() !== "")) {
-      return (
-        <>
-          <div className="edited">
-            <span>Имя: {userInfo.name}</span>
-            <span>Фамилия: {userInfo.surname}</span>
-            <span>Название предприятия: {userInfo.company}</span>
-            <span>Доход с начала года (в руб): {userInfo.income}</span>
-          </div>
-          <Button text="Изменить" onClick={handleEditClick}/>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <span className="w-[280px] text-xl" >Отсутствует информация о пользователе</span>
-          <Button
-            className="flex justify-center items-center gap-1"
-            onClick={handleEditClick}
-          >
-            <MdEdit /> Изменить
-          </Button>
-        </>
-      );
-    }
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    fetchUserInfo(); // Refresh user info when cancelling editing
   };
 
   return (
     <AccountWrapper activeTab="account">
       <div className="account__wrapper">
         <AccountData name={userInfo.name} surname={userInfo.surname} />
-        <div className="edit">{displayUserInfo()}</div>
+        <div className="user-info">
+          {Object.keys(userInfo).length ? (
+            <>
+              <div className="edited">
+                <span>Имя: {userInfo.name}</span>
+                <span>Фамилия: {userInfo.surname}</span>
+                <span>Название предприятия: {userInfo.companyName}</span>
+                <span>Доход с начала года (в руб): {userInfo.yield}</span>
+              </div>
+              {!isEditing && (
+                <Button text="Изменить" onClick={handleEditClick}/>
+              )}
+            </>
+          ) : (
+            <span className="w-[280px] text-xl" >Отсутствует информация о пользователе</span>
+          )}
+        </div>
         {isEditing && (
-          <div className="account">
+          <div className="account-form">
             <form className="form" onSubmit={handleSubmit}>
               <input
                 name="name"
@@ -105,21 +125,19 @@ const Account = () => {
                 placeholder="Фамилия"
               />
               <input
-                name="company"
+                name="companyName"
                 onChange={handleChange}
-                value={form.company}
+                value={form.companyName}
                 placeholder="Название предприятия"
               />
               <input
-                name="income"
+                name="yield"
                 onChange={handleChange}
-                value={form.income}
+                value={form.yield}
                 placeholder="Доход с начала года (в руб)"
               />
-              <Button
-                disabled={allFieldsEmpty()}
-                text="Сохранить"
-              />
+              <Button text="Сохранить" disabled={allFieldsEmpty()}/>
+              <Button text="Отменить" onClick={handleCancelClick}/>
             </form>
           </div>
         )}

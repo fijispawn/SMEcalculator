@@ -12,21 +12,48 @@ const Security = () => {
   });
 
   const [showForm, setShowForm] = useState(false); 
+  const [message, setMessage] = useState(""); // State to store messages to the user
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    if (form.newpassword !== form.confirm) {
+      setMessage("New passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await fetch("https://enterpizemate.dyzoon.dev/api/registration/account-info/set-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          oldPassword: form.oldpassword,
+          newPassword: form.newpassword,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setMessage("Password changed successfully.");
+        setForm({oldpassword: "", newpassword: "", confirm: ""}); // Reset form
+      } else {
+        throw new Error(data.message || "Failed to change password");
+      }
+    } catch (error) {
+      setMessage(error.message);
+    }
   };
 
   const handleShowForm = () => {
     setShowForm(true); 
   };
 
-  const allFieldsEmpty = () => {
+  const allFieldsFilled = () => {
     return Object.values(form).every(field => field.trim() !== "");
   };
 
@@ -61,9 +88,10 @@ const Security = () => {
                 value={form.confirm}
                 placeholder="Подтвердите новый пароль"
               />
-            <Button text={'Сохранить'} disabled={!allFieldsEmpty()}/>
+              <Button text={'Сохранить'} disabled={!allFieldsFilled()}/>
             </form>
           )}
+          {message && <div className="message">{message}</div>} {/* Display success or error message */}
         </div>
       </div>
     </AccountWrapper>

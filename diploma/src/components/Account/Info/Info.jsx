@@ -25,18 +25,17 @@ const Account = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userLogin = localStorage.getItem("userLogin"); 
-  
+    const userLogin = localStorage.getItem("userLogin");
+
     const updatedData = { ...form, login: userLogin };
-  
+
     fetch("https://enterpizemate.dyzoon.dev/api/registration/account-info/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedData),
-      credentials: 'include', 
-
+      credentials: 'include',
     })
     .then((response) => {
       if (!response.ok) {
@@ -45,41 +44,20 @@ const Account = () => {
       return response.json();
     })
     .then((data) => {
-
-      if (data) {
-        setUserInfo(data);
-        setIsEditing(false); 
-      } else {
-        return fetch(`https://enterpizemate.dyzoon.dev/api/registration/account-info/${userLogin}`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((userData) => {
-            setUserInfo(userData);
-          });
-      }
+      setUserInfo(form); // Update the displayed user info with the submitted form data
+      setIsEditing(false); // Hide the form after updating
     })
     .catch((error) => {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
+      console.error("There has been a problem with your fetch operation:", error);
     });
   };
-  
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const displayUserInfo = () => {
-    const hasInfo = Object.values(userInfo).some(
-      (value) => value.trim() !== ""
-    );
-    if (hasInfo) {
+    if (Object.values(userInfo).some(value => value.trim() !== "")) {
       return (
         <>
           <div className="edited">
@@ -88,7 +66,7 @@ const Account = () => {
             <span>Название предприятия: {userInfo.company}</span>
             <span>Доход с начала года (в руб): {userInfo.income}</span>
           </div>
-          <button onClick={handleEditClick}>Изменить</button>
+          <Button text="Изменить" onClick={handleEditClick}/>
         </>
       );
     } else {
@@ -110,7 +88,7 @@ const Account = () => {
     <AccountWrapper activeTab="account">
       <div className="account__wrapper">
         <AccountData name={userInfo.name} surname={userInfo.surname} />
-        {!isEditing && <div className="edit">{displayUserInfo()}</div>}
+        <div className="edit">{displayUserInfo()}</div>
         {isEditing && (
           <div className="account">
             <form className="form" onSubmit={handleSubmit}>
@@ -139,7 +117,7 @@ const Account = () => {
                 placeholder="Доход с начала года (в руб)"
               />
               <Button
-                disabled={allFieldsEmpty()} 
+                disabled={allFieldsEmpty()}
                 text="Сохранить"
               />
             </form>

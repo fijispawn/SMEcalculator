@@ -155,6 +155,7 @@ input {
   .chart {
     position: fixed;
     left: 20px;
+    overflow-x: auto;
   }
 
   .pdf {
@@ -162,7 +163,8 @@ input {
     bottom: 80px;
   }
 
-  .chart__label {
-   
+  .chart__wrapper {
+   width: 100%;
+   overflow: auto;
   }
 }

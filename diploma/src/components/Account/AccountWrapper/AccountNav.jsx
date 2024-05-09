@@ -8,8 +8,8 @@ const AccountNav = ({ activeTab }) => {
       <Link to="/account" className={`tab ${activeTab === 'account' ? 'tab__main' : 'tab'}`}>
         Информация
       </Link>
-      <Link to="/security" className={`tab ${activeTab === 'security' ? 'tab__main' : 'tab'}`}>
-        Безопасность
+      <Link to="/security" className={`tab ${activeTab === 'security' ? 'tab__main' : 'tab'} security`}>
+        <span>Безопасность</span> 
       </Link>
       <Link to="/license" className={`tab ${activeTab === 'license' ? 'tab__main' : 'tab'}`}>
         Лицензия

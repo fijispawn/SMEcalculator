@@ -81,19 +81,29 @@
   gap: 20px;
   text-align: right;
 }
+.tab.security span {
+  display: inline;
+}
 
 @media all and (max-width: 540px) {
   .account__wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap:30px
+    gap: 30px;
   }
   .tab__container {
     overflow-x: scroll;
     position: fixed;
-    top: 20px;        
-    left: 0;                  
-    right: 0;                 
+    top: 20px;
+    left: 0;
+    right: 0;
+  }
+  .tab.security::after {
+    content: "Настройки"; /* New text */
+    display: block;
+  }
+  .tab.security span {
+    display: none; /* Hide original text */
   }
 }

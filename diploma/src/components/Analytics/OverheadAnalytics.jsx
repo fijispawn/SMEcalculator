@@ -156,10 +156,8 @@ const OverheadAnalytics = () => {
     <AnalyticsWrapper activeTab="overhead-analytics">
       {showChart ? (
         <div className="chart__container">
-          <div className="chart__wrapper">
           <div ref={chartRef} className="chart">
             <Line data={data} options={options} />
-          </div>
           </div>
           <Button onClick={downloadChartAsPDF} className="pdf">
             Скачать график <FaRegFilePdf />

@@ -105,10 +105,10 @@
     right: 0;
   }
   .tab.security::after {
-    content: "Настройки"; /* New text */
+    content: "Настройки"; 
     display: block;
   }
   .tab.security span {
-    display: none; /* Hide original text */
+    display: none; 
   }
 }

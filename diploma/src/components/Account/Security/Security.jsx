@@ -21,19 +21,15 @@ const Security = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if old password is entered
     if (!form.oldpassword) {
       setMessage("Please enter your old password.");
       return;
     }
 
-    // Validate new passwords match
     if (form.newpassword !== form.confirm) {
       setMessage("New passwords do not match.");
       return;
     }
-
-    // Further validation can be added here (e.g., password strength)
 
     try {
       const response = await fetch(
@@ -44,7 +40,7 @@ const Security = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            password: form.newpassword, // Only new password needed for the backend
+            password: form.newpassword, 
           }),
         }
       );
@@ -52,7 +48,7 @@ const Security = () => {
       const data = await response.json();
       if (response.ok) {
         setMessage("Password changed successfully.");
-        setForm({ oldpassword: "", newpassword: "", confirm: "" }); // Reset form on success
+        setForm({ oldpassword: "", newpassword: "", confirm: "" }); 
       } else {
         throw new Error(data.message || "Failed to change password");
       }
@@ -108,7 +104,6 @@ const Security = () => {
             </form>
           )}
           {message && <div className="message">{message}</div>}{" "}
-          {/* Display success or error message */}
         </div>
       </div>
     </AccountWrapper>

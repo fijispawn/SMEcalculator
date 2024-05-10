@@ -11,7 +11,7 @@ import { MdManageAccounts } from "react-icons/md";
 import { FiActivity } from "react-icons/fi";
 import { useTheme } from "../../hooks/useTheme";
 import Exit from "../Modal/Exit";
-import { useUser } from "../../hooks/UserContext"; // Import useUser correctly
+import { useUser } from "../../hooks/UserContext";
 
 const HeaderIn = () => {
   const { userName } = useUser();

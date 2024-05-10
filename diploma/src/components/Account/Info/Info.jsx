@@ -23,7 +23,7 @@ const Account = () => {
   };
 
   const allFieldsEmpty = () => {
-    return Object.values(form).every((field) => field.trim() === "");
+    return Object.values(form).every((field) => (field || "").trim() === "");
   };
 
   const fetchUserInfo = () => {
@@ -42,7 +42,12 @@ const Account = () => {
         return response.json();
       })
       .then((data) => {
-        setUserInfo(data);
+        setUserInfo({
+          name: data.name || "",
+          surname: data.surname || "",
+          companyName: data.companyName || "",
+          yield: data.yield || "",
+        });
       })
       .catch((error) => {
         console.error("Problem fetching user info:", error);
@@ -69,23 +74,20 @@ const Account = () => {
         credentials: "include",
       }
     )
-    .then((response) => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
-    })
-    .then(() => {
-        setUserName(form.name); // Update the context with the new name
-        // Ensure the reload happens only after a successful response
+      })
+      .then(() => {
+        setUserName(form.name);
         window.location.reload();
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.error("Error updating user info:", error);
-        alert("Failed to update the information. Please check your session and try again.");
-    });
-};
-
+      });
+  };
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -93,7 +95,12 @@ const Account = () => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setForm(userInfo); // Reset form to initial user info
+    setForm({
+      name: userInfo.name || "",
+      surname: userInfo.surname || "",
+      companyName: userInfo.companyName || "",
+      yield: userInfo.yield || "",
+    });
   };
 
   return (

@@ -69,22 +69,23 @@ const Account = () => {
         credentials: "include",
       }
     )
-      .then((response) => {
+    .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
-      })
-      .then(() => {
+    })
+    .then(() => {
         setUserName(form.name); // Update the context with the new name
-
-        // Reload the page to reflect the updated data
+        // Ensure the reload happens only after a successful response
         window.location.reload();
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.error("Error updating user info:", error);
-      });
-  };
+        alert("Failed to update the information. Please check your session and try again.");
+    });
+};
+
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -100,7 +101,7 @@ const Account = () => {
       <div className="account__wrapper">
         <AccountData name={userInfo.name} surname={userInfo.surname} />
         {isEditing ? (
-          <div className="account-form">
+          <div className="account__form">
             <form className="form" onSubmit={handleSubmit}>
               <input
                 name="name"
@@ -126,7 +127,7 @@ const Account = () => {
                 value={form.yield}
                 placeholder="Доход с начала года (в руб)"
               />
-              <div className="flex">
+              <div className="flex flex-col gap-[10px]">
                 <Button text="Отменить" onClick={handleCancelClick} />
                 <Button text="Сохранить" disabled={allFieldsEmpty()} />
               </div>

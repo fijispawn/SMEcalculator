@@ -11,16 +11,15 @@ import { MdManageAccounts } from "react-icons/md";
 import { FiActivity } from "react-icons/fi";
 import { useTheme } from "../../hooks/useTheme";
 import Exit from "../Modal/Exit";
-import { useUser } from "../../hooks/UserContext";
+import { useUser } from "../../hooks/UserContext"; // Import useUser correctly
 
 const HeaderIn = () => {
-
-  const { userName } = useUser(); // Use the context value
+  const { userName } = useUser();
   const { theme, setTheme } = useTheme();
   const handleLightThemeClick = () => {
     setTheme("light");
   };
-  
+
   const handleDarkThemeClick = () => {
     setTheme("dark");
     console.log("theme changed");
@@ -64,9 +63,11 @@ const HeaderIn = () => {
           </div>
         </Link>
         <div className="account__header">
-          <img src={Avatar} alt="avatar"></img>
-          <span className="flex items-center justify-center">{userName}</span> 
-          <button className='exit__button' onClick={() => setModalActive(true)}>Выход</button>
+          <img src={Avatar} alt="avatar" />
+          <span className="flex items-center justify-center">{userName}</span>
+          <button className="exit__button" onClick={() => setModalActive(true)}>
+            Выход
+          </button>
           <Exit active={modalActive} setActive={setModalActive} />
         </div>
       </div>

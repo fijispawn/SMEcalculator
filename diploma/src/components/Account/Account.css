@@ -42,7 +42,8 @@
 }
 
 .form {
-  min-width: 300px;
+  min-width: 200px;
+  max-width: 300px;
 }
 
 .edit {
@@ -90,6 +91,13 @@
   display: inline;
 }
 
+.account__form {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  align-items: center;
+}
+
 @media all and (max-width: 540px) {
   .account__wrapper {
     display: flex;
@@ -105,10 +113,10 @@
     right: 0;
   }
   .tab.security::after {
-    content: "Настройки"; 
+    content: "Настройки";
     display: block;
   }
   .tab.security span {
-    display: none; 
+    display: none;
   }
 }

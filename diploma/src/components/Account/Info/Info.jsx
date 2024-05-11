@@ -60,32 +60,34 @@ const Account = () => {
     e.preventDefault();
     const userLogin = localStorage.getItem("userLogin");
     const updatedData = { ...form, login: userLogin };
-
-    fetch(
-      "https://enterpizemate.dyzoon.dev/api/registration/account-info/update",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-        credentials: "include",
+  
+    fetch("https://enterpizemate.dyzoon.dev/api/registration/account-info/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+      credentials: "include",
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(() => {
-        setUserName(form.name);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error updating user info:", error);
-      });
+      return response.text();  // Using .text() instead of .json() to handle empty responses
+    })
+    .then(data => {
+      if (data) {
+        const jsonData = JSON.parse(data); 
+        setUserName(form.name); 
+        console.log("Update successful:", jsonData);
+      }
+      fetchUserInfo(); 
+    })
+    .catch(error => {
+      console.error("Error updating user info:", error);
+    });
   };
+  
 
   const handleEditClick = () => {
     setIsEditing(true);

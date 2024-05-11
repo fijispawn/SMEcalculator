@@ -73,35 +73,32 @@ const Account = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      return response.text();  // Using .text() instead of .json() to handle empty responses
+      return response.text(); // Assuming the server might not return JSON
     })
     .then(data => {
-      if (data) {
-        const jsonData = JSON.parse(data); 
-        setUserName(form.name); 
-        console.log("Update successful:", jsonData);
-      }
-      fetchUserInfo(); 
+      setUserInfo(form);
+      setUserName(form.name); 
+      setIsEditing(false); 
     })
     .catch(error => {
       console.error("Error updating user info:", error);
     });
   };
   
-
   const handleEditClick = () => {
     setIsEditing(true);
   };
-
+  
   const handleCancelClick = () => {
     setIsEditing(false);
+    // Reset form to the last saved userInfo
     setForm({
       name: userInfo.name || "",
       surname: userInfo.surname || "",
       companyName: userInfo.companyName || "",
     });
   };
-
+  
   return (
     <AccountWrapper activeTab="account">
       <div className="account__wrapper">
@@ -151,6 +148,6 @@ const Account = () => {
       </div>
     </AccountWrapper>
   );
-};
-
+  };
+  
 export default Account;

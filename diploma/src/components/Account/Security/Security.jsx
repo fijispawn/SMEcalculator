@@ -40,7 +40,7 @@ const Security = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            password: form.newpassword, 
+            password: form.newpassword,
           }),
         }
       );
@@ -48,7 +48,7 @@ const Security = () => {
       const data = await response.json();
       if (response.ok) {
         setMessage("Password changed successfully.");
-        setForm({ oldpassword: "", newpassword: "", confirm: "" }); 
+        setForm({ oldpassword: "", newpassword: "", confirm: "" });
       } else {
         throw new Error(data.message || "Failed to change password");
       }
@@ -72,7 +72,7 @@ const Security = () => {
   return (
     <AccountWrapper activeTab="security">
       <div className="account__wrapper">
-        <AccountData />
+        <AccountData name={userInfo.name} surname={userInfo.surname} />
         <div className="account">
           {!showForm && (
             <Button text={"Изменить пароль"} onClick={handleShowForm} />

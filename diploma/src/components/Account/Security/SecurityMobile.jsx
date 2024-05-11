@@ -5,6 +5,7 @@ import { useTheme } from "../../../hooks/useTheme";
 import LightTheme from "../../../assets/lightThemeMob.svg";
 import DarkTheme from "../../../assets/darkThemeMob.svg";
 import { FaLock } from "react-icons/fa6";
+import Button from "../../Button/Button";
 
 const SecurityMobile = () => {
   const { theme, setTheme } = useTheme();
@@ -13,7 +14,7 @@ const SecurityMobile = () => {
     newpassword: "",
     confirm: "",
   });
-  const [message, setMessage] = useState(""); // State to store feedback messages
+  const [message, setMessage] = useState(""); 
 
   const handleLightThemeClick = () => {
     setTheme("light");
@@ -27,6 +28,9 @@ const SecurityMobile = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  const allFieldsFilled = form.oldpassword && form.newpassword && form.confirm;
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,10 +112,9 @@ const SecurityMobile = () => {
             value={form.confirm}
             placeholder="Подтвердите новый пароль"
           />
-          <button type="submit">Сохранить</button>
+          <Button text={'Сохранить'} disabled={!allFieldsFilled} className="mobile__save" type="submit"/>
         </form>
-        {message && <div className="message">{message}</div>}{" "}
-        {/* Display feedback message */}
+        {message && <div className="message">{message}</div>}
       </div>
     </AccountWrapper>
   );

@@ -42,14 +42,14 @@
 }
 
 .form {
-  min-width: 200px;
+  min-width: 260px;
   max-width: 300px;
 }
 
 .edit {
   display: flex;
   text-align: center;
-  gap: 30px;
+  gap: 20px;
   flex-direction: column;
   justify-content: end;
   align-items: center;
@@ -63,6 +63,9 @@
   padding: 20px;
   border: solid 1px var(--font-color);
   border-radius: 30px;
+  width: 300px;
+  background-color: rgba(0, 0, 0, 0.1);
+  text-align: justify;
 }
 
 .user__info {
@@ -98,12 +101,16 @@
   align-items: center;
 }
 
+.mobile__save{
+  background-color: #fd7770;
+}
+
 @media all and (max-width: 540px) {
   .account__wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
   }
   .tab__container {
     overflow-x: scroll;

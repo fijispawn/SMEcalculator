@@ -10,7 +10,7 @@
   max-width: 300px;
   background-color: #fd7770;
   transition: 0.1s ease-in;
-  color: white;
+  color: #f6e9e0;
   border: 1px solid #fd7770;
 }
 
@@ -27,4 +27,5 @@
   background-color: #fd7770;
   transition: 0.1s ease-in;
   border: 1px solid #fd7770;
+  color:#f6e9e0;
 }

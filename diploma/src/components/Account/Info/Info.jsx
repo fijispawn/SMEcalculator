@@ -13,7 +13,6 @@ const Account = () => {
     name: "",
     surname: "",
     companyName: "",
-    yield: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -46,7 +45,6 @@ const Account = () => {
           name: data.name || "",
           surname: data.surname || "",
           companyName: data.companyName || "",
-          yield: data.yield || "",
         });
       })
       .catch((error) => {
@@ -99,7 +97,6 @@ const Account = () => {
       name: userInfo.name || "",
       surname: userInfo.surname || "",
       companyName: userInfo.companyName || "",
-      yield: userInfo.yield || "",
     });
   };
 
@@ -128,12 +125,6 @@ const Account = () => {
                 value={form.companyName}
                 placeholder="Название предприятия"
               />
-              <input
-                name="yield"
-                onChange={handleChange}
-                value={form.yield}
-                placeholder="Доход с начала года (в руб)"
-              />
               <div className="flex flex-col gap-[10px]">
                 <Button text="Отменить" onClick={handleCancelClick} />
                 <Button text="Сохранить" disabled={allFieldsEmpty()} />
@@ -146,9 +137,13 @@ const Account = () => {
               <span>Имя: {userInfo.name}</span>
               <span>Фамилия: {userInfo.surname}</span>
               <span>Название предприятия: {userInfo.companyName}</span>
-              <span>Доход с начала года (в руб): {userInfo.yield}</span>
             </div>
-            <Button text="Изменить" onClick={handleEditClick} />
+            <Button
+              className="flex items-center justify-center gap-[4px]"
+              onClick={handleEditClick}
+            >
+              <MdEdit /> Изменить
+            </Button>
           </div>
         )}
       </div>

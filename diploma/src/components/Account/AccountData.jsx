@@ -10,7 +10,7 @@ const AccountData = ({ name, surname }) => {
 
   return (
     <div className="user__info">
-      <img className="w-[180px]" src={Avatar} alt="avatar" />
+      <img className="w-[170px]" src={Avatar} alt="avatar" />
       <div>{name} {surname}</div>
       <Exit active={modalActive} setActive={setModalActive} />
       <div className="license__info">

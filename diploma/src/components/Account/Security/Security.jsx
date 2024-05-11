@@ -5,6 +5,9 @@ import "../Account.css";
 import Button from "../../Button/Button";
 
 const Security = () => {
+
+  const [userInfo, setUserInfo] = useState({});
+
   const [form, setForm] = useState({
     oldpassword: "",
     newpassword: "",

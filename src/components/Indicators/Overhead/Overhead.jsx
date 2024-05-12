@@ -6,6 +6,9 @@ import Calendar from "../../Modal/Calendar.jsx";
 import Button from "../../Button/Button.jsx";
 import dayjs from "dayjs";
 import MessageModal from "../../Modal/MessageModal.jsx";
+import "dayjs/locale/ru"; // import Russian locale
+
+dayjs.locale("ru"); // use Russian locale globally
 
 const Overhead = () => {
   const location = useLocation();
@@ -15,8 +18,8 @@ const Overhead = () => {
   const [showSaveMessageModal, setShowSaveMessageModal] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState({
-    month: "",  // Start empty, will use default prompt in Calendar if empty
-    year: "",   // Start empty
+    month: "", // Start empty, will use default prompt in Calendar if empty
+    year: "", // Start empty
   });
 
   const [formData, setFormData] = useState({
@@ -28,16 +31,6 @@ const Overhead = () => {
     taxes: "",
     patent: "",
   });
-
-  const inputNames = {
-    salary: "Зарплата сотрудникам",
-    bonus: "Доплаты сотрудникам",
-    salaryTaxes: "Зарплатные налоги",
-    rent: "Аренда помещения",
-    ads: "Реклама",
-    taxes: "Налоги",
-    patent: "Патент",
-  };
 
   useEffect(() => {
     if (location.state) {
@@ -73,8 +66,13 @@ const Overhead = () => {
         return acc;
       }, {});
 
-      const dateString = `${selectedDate.year}-${selectedDate.month}-01`;
-      const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid() ? dateString : "Invalid Date";
+      const monthIndex = dayjs().month(selectedDate.month).format("MM"); // Convert month name to month number
+      const dateString = `${selectedDate.year}-${monthIndex}-01`;
+      const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid()
+        ? dateString
+        : "Invalid Date";
+
+      console.log("Saving data with date:", formattedDate); // Debugging log
 
       const saveData = {
         ...numericFormData,
@@ -88,27 +86,28 @@ const Overhead = () => {
         },
         body: JSON.stringify(saveData),
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok.");
-        }
-        return response.text();
-      })
-      .then(text => {
-        return text ? JSON.parse(text) : {};
-      })
-      .then(data => {
-        console.log("Success:", data);
-        setSaveMessage(`Data for ${selectedDate.month} ${selectedDate.year} saved.`);
-        setShowSaveMessageModal(true);
-        setTimeout(() => {
-          setSaveMessage("");
-          setShowSaveMessageModal(false);
-        }, 3000);
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              `Network response was not ok. Status: ${response.status}`
+            );
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Success:", data);
+          setSaveMessage(
+            `Data for ${selectedDate.month} ${selectedDate.year} saved.`
+          );
+          setShowSaveMessageModal(true);
+          setTimeout(() => {
+            setSaveMessage("");
+            setShowSaveMessageModal(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
   };
 
@@ -129,7 +128,9 @@ const Overhead = () => {
       </div>
       <div className="button__container">
         <Button
-          text={`${selectedDate.month || 'Календарь'} ${selectedDate.year || ''}`.trim()}
+          text={`${selectedDate.month || "Календарь"} ${
+            selectedDate.year || ""
+          }`.trim()}
           onClick={() => setModalActive(true)}
         />
         <Button

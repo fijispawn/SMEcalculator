@@ -18,7 +18,7 @@ import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
 import FilledGraphs from "./FilledGraphs/FilledGraphs";
 import SelectYearModal from "../Modal/SelectYearModal";
-import { useNavigate } from "react-router-dom"; // Import if you're using react-router
+import { useNavigate } from "react-router-dom"; 
 
 ChartJS.register(
   CategoryScale,
@@ -37,21 +37,21 @@ const OverheadAnalytics = () => {
   const [hasData, setHasData] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const chartRef = useRef();
-  const navigate = useNavigate(); // For navigation
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then((response) => response.json())
       .then((data) => {
-        const initData = Array(12).fill(null); // Prepare an array for all months
+        const initData = Array(12).fill(null); 
 
         Object.entries(data).forEach(([key, value]) => {
-          const parsedDate = new Date(key); // Assume keys are dates like '2029-01-01'
+          const parsedDate = new Date(key); 
           const year = parsedDate.getFullYear();
-          const month = parsedDate.getMonth(); // Months are zero-indexed
+          const month = parsedDate.getMonth(); 
 
           if (year === selectedYear) {
-            initData[month] = value.summ; // Assign the summary to the correct month
+            initData[month] = value.summ; 
           }
         });
 
@@ -149,7 +149,7 @@ const OverheadAnalytics = () => {
   };
 
   const handleEditData = (data) => {
-    navigate("/overhead", { state: data }); // Adjust as necessary for routing and state passing
+    navigate("/overhead", { state: data }); 
   };
 
   return (

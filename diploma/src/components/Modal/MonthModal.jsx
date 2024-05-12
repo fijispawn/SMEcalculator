@@ -7,9 +7,9 @@ const months = [
   "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
 ];
 
-const MonthModal = ({ onSelect, active }) => {
+const MonthModal = ({ onSelect, active, onClose }) => {
   const handleBackgroundClick = () => {
-    onSelect(null);
+    onClose();
   };
 
   const handleMonthClick = (month) => {

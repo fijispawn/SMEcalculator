@@ -23,8 +23,14 @@ const Calendar = ({ active, setActive, updateDate, initialMonth, initialYear }) 
   };
 
   const handleSave = () => {
+    if (selectedMonth && selectedYear) 
     updateDate(selectedMonth, selectedYear);
     setActive(false);
+  };
+
+  const handleCloseModals = () => {
+    setModalActive(false);
+    setYearModalActive(false);
   };
 
   const isSaveDisabled = selectedMonth === "Месяц" || selectedYear === "Год";
@@ -54,8 +60,8 @@ const Calendar = ({ active, setActive, updateDate, initialMonth, initialYear }) 
             {selectedYear}
           </button>
         </div>
-        <MonthModal active={modalActive} onSelect={handleSelectMonth} />
-        <YearModal active={yearModalActive} onSelect={handleSelectYear} />
+        <MonthModal active={modalActive} onSelect={handleSelectMonth} onClose={handleCloseModals} />
+        <YearModal active={yearModalActive} onSelect={handleSelectYear} onClose={handleCloseModals}/>
         <button
           className={`${styles.save} ${
             isSaveDisabled ? styles.disabled : ""

@@ -41,7 +41,7 @@ const Overhead = () => {
     taxes: "Налоги",
     patent: "Патент",
   };
-  
+
   useEffect(() => {
     if (location.state) {
       const { date, ...rest } = location.state;
@@ -69,60 +69,63 @@ const Overhead = () => {
     setSelectedDate({ month, year });
   };
 
-  const handleSave = () => {
-    if (selectedDate.month && selectedDate.year) {
-      const numericFormData = Object.keys(formData).reduce((acc, key) => {
-        acc[key] = formData[key] ? Number(formData[key]) : 0;
-        return acc;
-      }, {});
+  const monthMap = {
+  'Январь': '01', 'Февраль': '02', 'Март': '03',
+  'Апрель': '04', 'Май': '05', 'Июнь': '06',
+  'Июль': '07', 'Август': '08', 'Сентябрь': '09',
+  'Октябрь': '10', 'Ноябрь': '11', 'Декабрь': '12'
+};
 
-      const monthNumber = dayjs().month(selectedDate.month).format("MM");
-      const dateString = `${selectedDate.year}-${monthNumber}-01`;
-      const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid()
-        ? dateString
-        : "Invalid Date";
+const handleSave = () => {
+  if (selectedDate.month && selectedDate.year) {
+    const numericFormData = Object.keys(formData).reduce((acc, key) => {
+      acc[key] = formData[key] ? Number(formData[key]) : 0;
+      return acc;
+    }, {});
 
-      if (formattedDate === "Invalid Date") {
-        console.error("Invalid date formed:", dateString);
-        return;
-      }
+    // Convert month name to number using the map
+    const monthNumber = monthMap[selectedDate.month.toLowerCase()]; // Ensure month names are in lower case for matching
+    const dateString = `${selectedDate.year}-${monthNumber}-01`;
+    const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid() ? dateString : "Invalid Date";
 
-      const saveData = {
-        ...numericFormData,
-        date: formattedDate,
-      };
-
-      fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(saveData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(
-              `Network response was not ok. Status: ${response.status}`
-            );
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Success:", data);
-          setSaveMessage(
-            `Data for ${selectedDate.month} ${selectedDate.year} saved.`
-          );
-          setShowSaveMessageModal(true);
-          setTimeout(() => {
-            setSaveMessage("");
-            setShowSaveMessageModal(false);
-          }, 3000);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+    if (formattedDate === "Invalid Date") {
+      console.error("Invalid date formed:", dateString);
+      return;
     }
-  };
+
+    const saveData = {
+      ...numericFormData,
+      date: formattedDate,
+    };
+
+    fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(saveData),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok. Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Success:", data);
+      setSaveMessage(`Data for ${selectedDate.month} ${selectedDate.year} saved.`);
+      setShowSaveMessageModal(true);
+      setTimeout(() => {
+        setSaveMessage("");
+        setShowSaveMessageModal(false);
+      }, 3000);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  }
+};
+
 
   return (
     <IndicatorsWrapper activeTab="overhead">

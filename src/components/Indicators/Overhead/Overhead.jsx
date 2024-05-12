@@ -84,7 +84,7 @@ const handleSave = () => {
     }, {});
 
     // Convert month name to number using the map
-    const monthNumber = monthMap[selectedDate.month.toLowerCase()]; // Ensure month names are in lower case for matching
+    const monthNumber = monthMap[selectedDate.month.toLowerCase()];
     const dateString = `${selectedDate.year}-${monthNumber}-01`;
     const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid() ? dateString : "Invalid Date";
 
@@ -109,9 +109,11 @@ const handleSave = () => {
       if (!response.ok) {
         throw new Error(`Network response was not ok. Status: ${response.status}`);
       }
-      return response.json();
+      return response.text(); // Change here: using text() to handle empty responses
     })
-    .then(data => {
+    .then(text => {
+      // Only parse if there is content
+      const data = text ? JSON.parse(text) : {};
       console.log("Success:", data);
       setSaveMessage(`Data for ${selectedDate.month} ${selectedDate.year} saved.`);
       setShowSaveMessageModal(true);
@@ -125,6 +127,7 @@ const handleSave = () => {
     });
   }
 };
+
 
 
   return (

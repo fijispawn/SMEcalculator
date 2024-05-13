@@ -16,9 +16,9 @@ import Button from "../Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
-import FilledOverhead from "./FilledGraphs/FilledOverhead";
 import SelectYearModal from "../Modal/SelectYearModal";
 import { useNavigate } from "react-router-dom"; 
+import FilledCashflow from "./FilledGraphs/FilledCashflow";
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +30,7 @@ ChartJS.register(
   Legend
 );
 
-const BalanceAnalytics = () => {
+const CashflowAnalytics = () => {
   const [showChart, setShowChart] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -40,7 +40,7 @@ const BalanceAnalytics = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
+    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow")
       .then((response) => response.json())
       .then((data) => {
         const initData = Array(12).fill(null); 
@@ -118,7 +118,7 @@ const BalanceAnalytics = () => {
     ],
     datasets: [
       {
-        label: "Рассчет баланса в тыс. руб.",
+        label: "Движение средств в тыс. руб.",
         data: filteredData,
         fill: false,
         backgroundColor: "rgb(253, 119, 112)",
@@ -149,11 +149,11 @@ const BalanceAnalytics = () => {
   };
 
   const handleEditData = (data) => {
-    navigate("/balance", { state: data }); 
+    navigate("/cashflow", { state: data }); 
   };
 
   return (
-    <AnalyticsWrapper activeTab="balance-analytics">
+    <AnalyticsWrapper activeTab="cashflow-analytics">
       {showChart ? (
         <div className="chart__container">
           <div ref={chartRef} className="chart">
@@ -165,7 +165,7 @@ const BalanceAnalytics = () => {
         </div>
       ) : (
         <>
-          <FilledOverhead setHasData={setHasData} onEdit={handleEditData} />
+          <FilledCashflow setHasData={setHasData} onEdit={handleEditData} />
           <Button
             text="Показать график"
             onClick={handleShowChart}

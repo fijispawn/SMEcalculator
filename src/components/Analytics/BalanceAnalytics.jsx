@@ -51,7 +51,7 @@ const BalanceAnalytics = () => {
           const month = parsedDate.getMonth(); 
 
           if (year === selectedYear) {
-            initData[month] = value.calculate; 
+            initData[month] = data.calculate; 
           }
         });
 

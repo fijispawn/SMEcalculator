@@ -43,23 +43,25 @@ const BalanceAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
       .then((response) => response.json())
       .then((data) => {
-        const initData = Array(12).fill(null); // Create an array for 12 months, initially filled with nulls.
+        const initData = Array(12).fill(null); 
   
-        // Extracting date and sum from the response assuming 'calculate' holds the relevant sum for the balance
-        const parsedDate = new Date(data.date); 
-        const year = parsedDate.getFullYear();
-        const month = parsedDate.getMonth(); 
+        // Process each entry in the data
+        Object.entries(data).forEach(([key, value]) => {
+          const parsedDate = new Date(key); // Assuming the key is a date string.
+          const year = parsedDate.getFullYear();
+          const month = parsedDate.getMonth(); 
   
-        if (year === selectedYear) {
-          initData[month] = data.calculate; // Assuming 'calculate' contains the sum that should be displayed on the chart.
-        }
+          if (year === selectedYear) {
+            initData[month] = value.calculate; // Assuming 'calculate' contains the sum to be displayed.
+          }
+        });
   
         console.log(`Processed data for ${selectedYear}:`, initData);
         setFilteredData(initData);
-        setHasData(initData.some(value => value !== null)); // Check if there's any non-null value in the array
+        setHasData(initData.some(value => value !== null));
       })
       .catch((error) => console.error("Failed to fetch data", error));
-  }, [selectedYear]); // Dependency array includes selectedYear to refetch when it changes
+  }, [selectedYear]);
   
 
   // useEffect(() => {

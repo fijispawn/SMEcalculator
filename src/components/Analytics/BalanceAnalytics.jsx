@@ -43,24 +43,24 @@ const BalanceAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
       .then((response) => response.json())
       .then((data) => {
-        const initData = Array(12).fill(null); 
-
-        Object.entries(data).forEach(([key, value]) => {
-          const parsedDate = new Date(key); 
-          const year = parsedDate.getFullYear();
-          const month = parsedDate.getMonth(); 
-
-          if (year === selectedYear) {
-            initData[month] = data.calculate; 
-          }
-        });
-
+        const initData = Array(12).fill(null); // Create an array for 12 months, initially filled with nulls.
+  
+        // Extracting date and sum from the response assuming 'calculate' holds the relevant sum for the balance
+        const parsedDate = new Date(data.date); 
+        const year = parsedDate.getFullYear();
+        const month = parsedDate.getMonth(); 
+  
+        if (year === selectedYear) {
+          initData[month] = data.calculate; // Assuming 'calculate' contains the sum that should be displayed on the chart.
+        }
+  
         console.log(`Processed data for ${selectedYear}:`, initData);
         setFilteredData(initData);
-        setHasData(initData.some((value) => value !== null));
+        setHasData(initData.some(value => value !== null)); // Check if there's any non-null value in the array
       })
       .catch((error) => console.error("Failed to fetch data", error));
-  }, [selectedYear]);
+  }, [selectedYear]); // Dependency array includes selectedYear to refetch when it changes
+  
 
   // useEffect(() => {
   //   // Mock data as previously defined in FilledGraphs

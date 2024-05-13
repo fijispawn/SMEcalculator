@@ -4,7 +4,7 @@ import { MdEdit } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
 import Empty from "./Empty";
 
-const FilledGraphs = ({ setHasData, onEdit }) => {
+const FilledBalance = ({ setHasData, onEdit }) => {
   const [dates, setDates] = useState({});
 
   useEffect(() => {
@@ -73,4 +73,4 @@ const FilledGraphs = ({ setHasData, onEdit }) => {
   );
 };
 
-export default FilledGraphs;
+export default FilledBalance;

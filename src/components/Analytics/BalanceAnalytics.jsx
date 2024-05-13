@@ -149,7 +149,7 @@ const BalanceAnalytics = () => {
   };
 
   const handleEditData = (data) => {
-    navigate("/overhead", { state: data }); 
+    navigate("/balance", { state: data }); 
   };
 
   return (

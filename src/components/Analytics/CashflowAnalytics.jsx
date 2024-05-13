@@ -51,7 +51,7 @@ const CashflowAnalytics = () => {
           const month = parsedDate.getMonth(); 
 
           if (year === selectedYear) {
-            initData[month] = value.summ; 
+            initData[month] = value.calculate; 
           }
         });
 

@@ -40,26 +40,37 @@ const CashflowAnalytics = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow")
-      .then((response) => response.json())
-      .then((data) => {
-        const initData = Array(12).fill(null); // Create an array for 12 months, initially filled with nulls.
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow");
+        const data = await response.json();
+        const initData = Array(12).fill(null); // Initialize months
   
-        // Extracting date and sum from the response assuming 'calculate' holds the relevant sum for the balance
-        const parsedDate = new Date(data.date); 
-        const year = parsedDate.getFullYear();
-        const month = parsedDate.getMonth(); 
+        let dataAvailable = false;
   
-        if (year === selectedYear) {
-          initData[month] = data.calculate; // Assuming 'calculate' contains the sum that should be displayed on the chart.
-        }
+        Object.entries(data).forEach(([key, value]) => {
+          const parsedDate = new Date(key);
+          const year = parsedDate.getFullYear();
+          const month = parsedDate.getMonth();
+  
+          if (year === selectedYear) {
+            initData[month] = value.calculate;
+            dataAvailable = true; // Set to true if there's any data for the selected year
+          }
+        });
   
         console.log(`Processed data for ${selectedYear}:`, initData);
         setFilteredData(initData);
-        setHasData(initData.some(value => value !== null)); // Check if there's any non-null value in the array
-      })
-      .catch((error) => console.error("Failed to fetch data", error));
-  }, [selectedYear]); // Dependency array includes selectedYear to refetch when it changes
+        setHasData(dataAvailable); // Update based on if data was found for the year
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+        setHasData(false); // Only set to false if there is an error
+      }
+    };
+  
+    fetchData();
+  }, [selectedYear]);
+  
   
 
   // useEffect(() => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import HeaderIn from "./HeaderIn";
 import HeaderOut from "./HeaderOut";
 import { useAuth } from "../../hooks/AuthContext";
@@ -22,7 +22,7 @@ const Header = () => {
         }
         const data = await response.json();
         setUserInfo(data);
-        setLoggedIn(true)
+        setLoggedIn(true);
       } catch (error) {
         console.error("Failed to fetch user info:", error);
       }

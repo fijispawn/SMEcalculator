@@ -14,8 +14,18 @@
   font-size: 14px;
 }
 
+.avatar {
+  width: 170px;
+}
+
 .exit {
   background-color: transparent;
   color: var(--font-color);
   border: 1px solid var(--font-color);
+}
+
+@media all and (max-width: 540px) {
+  .avatar {
+    width: 130px;
+  }
 }

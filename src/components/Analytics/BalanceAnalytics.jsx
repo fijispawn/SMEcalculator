@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../Indicators/Indicators.css";
 import { AnalyticsWrapper } from "./AnalyticsWrapper/AnalyticsWrapper";
 import { Line } from "react-chartjs-2";
@@ -16,8 +16,9 @@ import Button from "../Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
-import FilledGraphs from "./FilledGraphs/FilledGraphs";
-import Empty from "./FilledGraphs/Empty";
+import FilledOverhead from "./FilledGraphs/FilledOverhead";
+import SelectYearModal from "../Modal/SelectYearModal";
+import { useNavigate } from "react-router-dom"; 
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +32,74 @@ ChartJS.register(
 
 const BalanceAnalytics = () => {
   const [showChart, setShowChart] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [hasData, setHasData] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
   const chartRef = useRef();
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
+      .then((response) => response.json())
+      .then((data) => {
+        const initData = Array(12).fill(null); 
+
+        Object.entries(data).forEach(([key, value]) => {
+          const parsedDate = new Date(key); 
+          const year = parsedDate.getFullYear();
+          const month = parsedDate.getMonth(); 
+
+          if (year === selectedYear) {
+            initData[month] = value.summ; 
+          }
+        });
+
+        console.log(`Processed data for ${selectedYear}:`, initData);
+        setFilteredData(initData);
+        setHasData(initData.some((value) => value !== null));
+      })
+      .catch((error) => console.error("Failed to fetch data", error));
+  }, [selectedYear]);
+
+  // useEffect(() => {
+  //   // Mock data as previously defined in FilledGraphs
+  //   const mockData = {
+  //     "2024-03-01": { summ: 210 },
+  //     "2024-04-01": { summ: 310 },
+  //     "2025-01-01": { summ: 410 },
+  //     "2025-02-01": { summ: 510 },
+  //     "2026-03-01": { summ: 610 },
+  //     "2026-04-01": { summ: 710 }
+  //   };
+
+  //   const initData = Array(12).fill(null);
+  //   Object.entries(mockData).forEach(([key, value]) => {
+  //     const parsedDate = new Date(key);
+  //     const year = parsedDate.getFullYear();
+  //     const month = parsedDate.getMonth();
+
+  //     if (year === selectedYear) {
+  //       initData[month] = value.summ;
+  //     }
+  //   });
+
+  //   setFilteredData(initData);
+  // }, [selectedYear]);
+
+  const handleShowChart = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSelectYear = (year) => {
+    setSelectedYear(year);
+    setShowModal(false);
+    setShowChart(true);
+  };
 
   const data = {
     labels: [
@@ -50,8 +118,8 @@ const BalanceAnalytics = () => {
     ],
     datasets: [
       {
-        label: "Баланс за все время",
-        data: [234,6, 59, 80],
+        label: "Рассчет баланса в тыс. руб.",
+        data: filteredData,
         fill: false,
         backgroundColor: "rgb(253, 119, 112)",
         borderColor: "rgba(253, 119, 112, 0.3)",
@@ -80,24 +148,34 @@ const BalanceAnalytics = () => {
     });
   };
 
+  const handleEditData = (data) => {
+    navigate("/overhead", { state: data }); 
+  };
+
   return (
-    <AnalyticsWrapper activeTab="balance-analytics">
-      {!showChart && (
-        <>
-          <Empty />
-          <Button disabled={true} text="Показать график" onClick={() => setShowChart(true)} />
-        </>
-      )}
-      {showChart && (
-        <>
-          <div className="chart__container">
-            <div ref={chartRef} className="chart">
-              <Line data={data} options={options} />
-            </div>
-            <Button onClick={downloadChartAsPDF} className="pdf">
-              Скачать график <FaRegFilePdf />
-            </Button>
+    <AnalyticsWrapper activeTab="overhead-analytics">
+      {showChart ? (
+        <div className="chart__container">
+          <div ref={chartRef} className="chart">
+            <Line data={data} options={options} />
           </div>
+          <Button onClick={downloadChartAsPDF} className="pdf">
+            Скачать график <FaRegFilePdf />
+          </Button>
+        </div>
+      ) : (
+        <>
+          <FilledOverhead setHasData={setHasData} onEdit={handleEditData} />
+          <Button
+            text="Показать график"
+            onClick={handleShowChart}
+            disabled={!hasData}
+          />
+          <SelectYearModal
+            isOpen={showModal}
+            onClose={handleCloseModal}
+            onSelectYear={handleSelectYear}
+          />
         </>
       )}
     </AnalyticsWrapper>

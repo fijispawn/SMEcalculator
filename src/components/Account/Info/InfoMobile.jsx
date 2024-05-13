@@ -37,9 +37,9 @@ const InfoMobile = () => {
       })
       .then((data) => {
         setUserInfo({
-          name: data.name || "Not provided",
-          surname: data.surname || "Not provided",
-          companyName: data.companyName || "Not provided",
+          name: data.name || "",
+          surname: data.surname || "",
+          companyName: data.companyName || "",
         });
       })
       .catch((error) => {

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { AccountWrapper } from "../AccountWrapper/AccountWrapper";
+import AccountData from "../AccountData";
 import "../Account.css";
 import Button from "../../Button/Button";
 
 const Security = () => {
-
-  const [userInfo, setUserInfo] = useState({});
 
   const [form, setForm] = useState({
     oldpassword: "",
@@ -74,6 +73,7 @@ const Security = () => {
   return (
     <AccountWrapper activeTab="security">
       <div className="account__wrapper">
+        <AccountData  />
         <div className="account">
           {!showForm && (
             <Button text={"Изменить пароль"} onClick={handleShowForm} />

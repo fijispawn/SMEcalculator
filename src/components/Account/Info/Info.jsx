@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Account.css";
 import { AccountWrapper } from "../AccountWrapper/AccountWrapper";
+import AccountData from "../AccountData";
 import { MdEdit } from "react-icons/md";
 import Button from "../../Button/Button";
 import { useUser } from "../../../hooks/UserContext";
@@ -101,6 +102,7 @@ const Account = () => {
   return (
     <AccountWrapper activeTab="account">
       <div className="account__wrapper">
+        <AccountData  />
         {isEditing ? (
           <div className="account__form">
             <form className="form" onSubmit={handleSubmit}>

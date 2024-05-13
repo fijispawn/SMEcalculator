@@ -131,7 +131,7 @@ const handleSave = () => {
 
 
   return (
-    <IndicatorsWrapper activeTab="overhead">
+    <IndicatorsWrapper activeTab="balance">
       <div className="grid__form">
         {Object.keys(formData).map((key, index) => (
           <React.Fragment key={index}>

@@ -153,7 +153,7 @@ const BalanceAnalytics = () => {
   };
 
   return (
-    <AnalyticsWrapper activeTab="overhead-analytics">
+    <AnalyticsWrapper activeTab="balance-analytics">
       {showChart ? (
         <div className="chart__container">
           <div ref={chartRef} className="chart">

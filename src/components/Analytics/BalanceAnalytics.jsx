@@ -17,7 +17,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { FaRegFilePdf } from "react-icons/fa";
 import SelectYearModal from "../Modal/SelectYearModal";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import FilledBalance from "./FilledGraphs/FilledBalance";
 
 ChartJS.register(
@@ -37,42 +37,46 @@ const BalanceAnalytics = () => {
   const [hasData, setHasData] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const chartRef = useRef();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
-      .then((response) => response.json())
-      .then((data) => {
-        const initData = Array(12).fill(null); 
-  
-        // Process each entry in the data
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance");
+        const data = await response.json();
+        const initData = Array(12).fill(null);
+
         Object.entries(data).forEach(([key, value]) => {
-          const parsedDate = new Date(key); // Assuming the key is a date string.
+          const parsedDate = new Date(key);
           const year = parsedDate.getFullYear();
-          const month = parsedDate.getMonth(); 
-  
+          const month = parsedDate.getMonth();
+
           if (year === selectedYear) {
-            initData[month] = value.calculate; // Assuming 'calculate' contains the sum to be displayed.
+            initData[month] = value.calculate;
           }
         });
-  
+
         console.log(`Processed data for ${selectedYear}:`, initData);
         setFilteredData(initData);
         setHasData(initData.some(value => value !== null));
-      })
-      .catch((error) => console.error("Failed to fetch data", error));
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+        setHasData(false);
+      }
+    };
+
+    fetchData();
   }, [selectedYear]);
-  
 
   // useEffect(() => {
   //   // Mock data as previously defined in FilledGraphs
   //   const mockData = {
-  //     "2024-03-01": { summ: 210 },
-  //     "2024-04-01": { summ: 310 },
-  //     "2025-01-01": { summ: 410 },
-  //     "2025-02-01": { summ: 510 },
-  //     "2026-03-01": { summ: 610 },
-  //     "2026-04-01": { summ: 710 }
+  //     "2024-03-01": { calculate: 210 },
+  //     "2024-04-01": { calculate: 310 },
+  //     "2025-01-01": { calculate: 410 },
+  //     "2025-02-01": { calculate: 510 },
+  //     "2026-03-01": { calculate: 610 },
+  //     "2026-04-01": { calculate: 710 }
   //   };
 
   //   const initData = Array(12).fill(null);
@@ -82,7 +86,7 @@ const BalanceAnalytics = () => {
   //     const month = parsedDate.getMonth();
 
   //     if (year === selectedYear) {
-  //       initData[month] = value.summ;
+  //       initData[month] = value.calculate;
   //     }
   //   });
 
@@ -151,7 +155,7 @@ const BalanceAnalytics = () => {
   };
 
   const handleEditData = (data) => {
-    navigate("/balance", { state: data }); 
+    navigate("/balance", { state: data });
   };
 
   return (

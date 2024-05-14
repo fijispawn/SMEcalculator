@@ -40,12 +40,11 @@ const CashflowAnalytics = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    // Function to process and set data for the chart
     const loadDataForYear = (year) => {
       fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow")
         .then(response => response.json())
         .then(data => {
-          const initData = Array(12).fill(null); // Prepare an array for all months set to null
+          const initData = Array(12).fill(0); // Fill with 0 for better chart visualization
   
           Object.entries(data).forEach(([key, value]) => {
             const date = new Date(key);
@@ -53,12 +52,13 @@ const CashflowAnalytics = () => {
             const dataYear = date.getFullYear();
   
             if (dataYear === year) {
-              initData[month] = value.sum; // Assuming the value object has a sum property
+              // Assuming you want to visualize income, adjust accordingly
+              initData[month] = value.calculate;
             }
           });
   
-          setFilteredData(initData); // Set filtered data for the chart
-          setHasData(initData.some(month => month !== null)); // Check if there's any non-null data
+          setFilteredData(initData);
+          setHasData(initData.some(month => month !== 0)); // Check for non-zero entries
         })
         .catch(error => {
           console.error("Failed to fetch data", error);
@@ -67,12 +67,11 @@ const CashflowAnalytics = () => {
         });
     };
   
-    if (showChart) { // Load data when showChart is true and selectedYear is set
+    if (showChart) { // Ensure this is called when needed, after year selection
       loadDataForYear(selectedYear);
     }
-  }, [showChart, selectedYear]); // Depend on showChart and selectedYear to reload data when these change
+  }, [showChart, selectedYear]); // Depend on showChart and selectedYear
   
-  // Rest of your component remains the same
   
 
   const handleShowChart = () => {

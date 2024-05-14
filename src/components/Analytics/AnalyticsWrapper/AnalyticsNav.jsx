@@ -12,7 +12,7 @@ const AnalyticsTabs = ({ activeTab }) => {
         Накладные расходы
       </Link>
       <Link to="/budget-analytics" className={`tab ${activeTab === 'budget-analytics' ? 'tab__main' : ''}`}>
-        Движение средств
+        Бюджет
       </Link>
       <Link to="/cashflow-analytics" className={`tab ${activeTab === 'cashflow-analytics' ? 'tab__main' : ''}`}>
         Движение средств

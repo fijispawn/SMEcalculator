@@ -36,7 +36,7 @@ const Budget = () => {
     salesIncome: "Доходы от продаж",
     productionCosts: "Себестоимость проданных товаров",
     bills: "Коммунальные услуги",
-    serviceCosts: "Затраты на обслуживание оборудования",
+    serviceCosts: "Обслуживание оборудования",
     logistics: "Логистические расходы",
     amortization: "Амортизация",
     reserves: "Резерв",

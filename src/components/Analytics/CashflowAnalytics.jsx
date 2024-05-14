@@ -40,7 +40,7 @@ const CashflowAnalytics = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
+    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow")
       .then(response => response.json())
       .then(data => {
         let dataAvailable = false;

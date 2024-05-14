@@ -40,36 +40,36 @@ const BudgetAnalytics = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-opbudget");
-        const data = await response.json();
-        const initData = Array(12).fill(null); // Initialize months
-  
-        let dataAvailable = false;
-  
-        Object.entries(data).forEach(([key, value]) => {
-          const parsedDate = new Date(key);
-          const year = parsedDate.getFullYear();
-          const month = parsedDate.getMonth();
-  
-          if (year === selectedYear) {
-            initData[month] = value.calculate;
-            dataAvailable = true; // Set to true if there's any data for the selected year
-          }
+    const loadDataForYear = (year) => {
+      fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-opbudget")
+        .then((response) => response.json())
+        .then((data) => {
+          const initData = Array(12).fill(0);
+
+          Object.entries(data).forEach(([key, value]) => {
+            const date = new Date(key);
+            const month = date.getMonth();
+            const dataYear = date.getFullYear();
+
+            if (dataYear === year) {
+              initData[month] = value.calculate;
+            }
+          });
+
+          setFilteredData(initData);
+          setHasData(initData.some((month) => month !== 0));
+        })
+        .catch((error) => {
+          console.error("Failed to fetch data", error);
+          setFilteredData([]);
+          setHasData(false);
         });
-  
-        console.log(`Processed data for ${selectedYear}:`, initData);
-        setFilteredData(initData);
-        setHasData(dataAvailable); // Update based on if data was found for the year
-      } catch (error) {
-        console.error("Failed to fetch data", error);
-        setHasData(false); // Only set to false if there is an error
-      }
     };
-  
-    fetchData();
-  }, [selectedYear]);
+
+    if (showChart) {
+      loadDataForYear(selectedYear);
+    }
+  }, [showChart, selectedYear]);
   
   
 

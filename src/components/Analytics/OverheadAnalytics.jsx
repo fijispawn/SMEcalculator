@@ -43,7 +43,7 @@ const OverheadAnalytics = () => {
     fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-costs")
       .then((response) => response.json())
       .then((data) => {
-        const initData = Array(12).fill(null); 
+        const initData = Array(12).fill(0); 
 
         Object.entries(data).forEach(([key, value]) => {
           const parsedDate = new Date(key); 

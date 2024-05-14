@@ -40,33 +40,36 @@ const BalanceAnalytics = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance");
-        const data = await response.json();
-        const initData = Array(12).fill(null);
+    const loadDataForYear = (year) => {
+      fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
+        .then((response) => response.json())
+        .then((data) => {
+          const initData = Array(12).fill(0);
 
-        Object.entries(data).forEach(([key, value]) => {
-          const parsedDate = new Date(key);
-          const year = parsedDate.getFullYear();
-          const month = parsedDate.getMonth();
+          Object.entries(data).forEach(([key, value]) => {
+            const date = new Date(key);
+            const month = date.getMonth();
+            const dataYear = date.getFullYear();
 
-          if (year === selectedYear) {
-            initData[month] = value.calculate;
-          }
+            if (dataYear === year) {
+              initData[month] = value.calculate;
+            }
+          });
+
+          setFilteredData(initData);
+          setHasData(initData.some((month) => month !== 0));
+        })
+        .catch((error) => {
+          console.error("Failed to fetch data", error);
+          setFilteredData([]);
+          setHasData(false);
         });
-
-        console.log(`Processed data for ${selectedYear}:`, initData);
-        setFilteredData(initData);
-        setHasData(initData.some(value => value !== null));
-      } catch (error) {
-        console.error("Failed to fetch data", error);
-        setHasData(false);
-      }
     };
 
-    fetchData();
-  }, [selectedYear]);
+    if (showChart) {
+      loadDataForYear(selectedYear);
+    }
+  }, [showChart, selectedYear]);
 
   // useEffect(() => {
   //   // Mock data as previously defined in FilledGraphs

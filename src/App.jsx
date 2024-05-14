@@ -21,6 +21,7 @@ import MobileHeader from "./components/Header/MobileHeader.jsx";
 import InfoMobile from "./components/Account/Info/InfoMobile.jsx";
 import SecurityMobile from "./components/Account/Security/SecurityMobile.jsx";
 import { useAuth } from "./hooks/AuthContext"; 
+import BudgetAnalytics from "./components/Analytics/BudgetAnalytics.jsx";
 
 
 
@@ -54,6 +55,7 @@ function App() {
 
           <Route path="/balance-analytics" element={<BalanceAnalytics />} />
           <Route path="/overhead-analytics" element={<OverheadAnalytics />} />
+          <Route path="/budget-analytics" element={<BudgetAnalytics />} />
           <Route path="/cashflow-analytics" element={<CashflowAnalytics />} />
         </Routes>
       </div>

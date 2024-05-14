@@ -34,7 +34,7 @@ const Budget = () => {
 
   const inputNames = {
     salesIncome: "Доходы от продаж",
-    productionCosts: "Себестоимость проданных товаров",
+    productionCosts: "Проданные товары",
     bills: "Коммунальные услуги",
     serviceCosts: "Обслуживание оборудования",
     logistics: "Логистические расходы",

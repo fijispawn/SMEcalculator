@@ -40,55 +40,40 @@ const CashflowAnalytics = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow")
-      .then(response => response.json())
-      .then(data => {
-        let dataAvailable = false;
-        const currentYear = new Date().getFullYear();
-        const yearsToCheck = Array.from({ length: 11 }, (_, i) => currentYear + i);
-
-        Object.entries(data).forEach(([key, value]) => {
-          const year = new Date(key).getFullYear();
-          if (yearsToCheck.includes(year)) {
-            dataAvailable = true;
-          }
+    // Function to process and set data for the chart
+    const loadDataForYear = (year) => {
+      fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow")
+        .then(response => response.json())
+        .then(data => {
+          const initData = Array(12).fill(null); // Prepare an array for all months set to null
+  
+          Object.entries(data).forEach(([key, value]) => {
+            const date = new Date(key);
+            const month = date.getMonth();
+            const dataYear = date.getFullYear();
+  
+            if (dataYear === year) {
+              initData[month] = value.sum; // Assuming the value object has a sum property
+            }
+          });
+  
+          setFilteredData(initData); // Set filtered data for the chart
+          setHasData(initData.some(month => month !== null)); // Check if there's any non-null data
+        })
+        .catch(error => {
+          console.error("Failed to fetch data", error);
+          setFilteredData([]);
+          setHasData(false);
         });
-
-        setHasData(dataAvailable);
-      })
-      .catch(error => {
-        console.error("Failed to fetch data", error);
-        setHasData(false);
-      });
-  }, []);
-
+    };
   
+    if (showChart) { // Load data when showChart is true and selectedYear is set
+      loadDataForYear(selectedYear);
+    }
+  }, [showChart, selectedYear]); // Depend on showChart and selectedYear to reload data when these change
   
-
-  // useEffect(() => {
-  //   // Mock data as previously defined in FilledGraphs
-  //   const mockData = {
-  //     "2024-03-01": { summ: 210 },
-  //     "2024-04-01": { summ: 310 },
-  //     "2025-01-01": { summ: 410 },
-  //     "2025-02-01": { summ: 510 },
-  //     "2026-03-01": { summ: 610 },
-  //     "2026-04-01": { summ: 710 }
-  //   };
-
-  //   const initData = Array(12).fill(null);
-  //   Object.entries(mockData).forEach(([key, value]) => {
-  //     const parsedDate = new Date(key);
-  //     const year = parsedDate.getFullYear();
-  //     const month = parsedDate.getMonth();
-
-  //     if (year === selectedYear) {
-  //       initData[month] = value.summ;
-  //     }
-  //   });
-
-  //   setFilteredData(initData);
-  // }, [selectedYear]);
+  // Rest of your component remains the same
+  
 
   const handleShowChart = () => {
     setShowModal(true);

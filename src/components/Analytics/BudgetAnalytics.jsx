@@ -164,7 +164,7 @@ const BudgetAnalytics = () => {
   };
 
   return (
-    <AnalyticsWrapper activeTab="cashflow-analytics">
+    <AnalyticsWrapper activeTab="budget-analytics">
       {showChart ? (
         <div className="chart__container">
           <div ref={chartRef} className="chart">

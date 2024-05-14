@@ -108,15 +108,12 @@ input {
 @media all and (max-width: 540px) {
   .grid__form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-height: 320px;
-    min-width: 330px;
-    overflow-y: auto;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 100px;
+        flex-direction: column;
+        align-items: center;
+        min-width: 330px;
+        left: 0;
+        right: 0;
+
   }
   input {
     max-width: 300px;
@@ -135,10 +132,6 @@ input {
     align-items: center;
     justify-content: center;
     padding-top: 30px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 100px;
   }
 
   .tab__container {
@@ -166,5 +159,14 @@ input {
   .chart__wrapper {
    width: 100%;
    overflow: auto;
+  }
+
+  .form__container{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100px;
+    max-height: 420px;
+    overflow: auto;
   }
 }

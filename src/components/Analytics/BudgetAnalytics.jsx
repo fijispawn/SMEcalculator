@@ -70,33 +70,6 @@ const BudgetAnalytics = () => {
       loadDataForYear(selectedYear);
     }
   }, [showChart, selectedYear]);
-  
-  
-
-  // useEffect(() => {
-  //   // Mock data as previously defined in FilledGraphs
-  //   const mockData = {
-  //     "2024-03-01": { summ: 210 },
-  //     "2024-04-01": { summ: 310 },
-  //     "2025-01-01": { summ: 410 },
-  //     "2025-02-01": { summ: 510 },
-  //     "2026-03-01": { summ: 610 },
-  //     "2026-04-01": { summ: 710 }
-  //   };
-
-  //   const initData = Array(12).fill(null);
-  //   Object.entries(mockData).forEach(([key, value]) => {
-  //     const parsedDate = new Date(key);
-  //     const year = parsedDate.getFullYear();
-  //     const month = parsedDate.getMonth();
-
-  //     if (year === selectedYear) {
-  //       initData[month] = value.summ;
-  //     }
-  //   });
-
-  //   setFilteredData(initData);
-  // }, [selectedYear]);
 
   const handleShowChart = () => {
     setShowModal(true);
@@ -129,7 +102,7 @@ const BudgetAnalytics = () => {
     ],
     datasets: [
       {
-        label: "Движение средств в тыс. руб.",
+        label: "Бюджет в тыс. руб.",
         data: filteredData,
         fill: false,
         backgroundColor: "rgb(253, 119, 112)",

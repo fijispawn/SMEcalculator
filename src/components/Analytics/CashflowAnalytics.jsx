@@ -40,36 +40,28 @@ const CashflowAnalytics = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-cashflow");
-        const data = await response.json();
-        const initData = Array(12).fill(null); // Initialize months
-  
+    fetch("https://enterpizemate.dyzoon.dev/api/analytics/get-balance")
+      .then(response => response.json())
+      .then(data => {
         let dataAvailable = false;
-  
+        const currentYear = new Date().getFullYear();
+        const yearsToCheck = Array.from({ length: 11 }, (_, i) => currentYear + i);
+
         Object.entries(data).forEach(([key, value]) => {
-          const parsedDate = new Date(key);
-          const year = parsedDate.getFullYear();
-          const month = parsedDate.getMonth();
-  
-          if (year === selectedYear) {
-            initData[month] = value.calculate;
-            dataAvailable = true; // Set to true if there's any data for the selected year
+          const year = new Date(key).getFullYear();
+          if (yearsToCheck.includes(year)) {
+            dataAvailable = true;
           }
         });
-  
-        console.log(`Processed data for ${selectedYear}:`, initData);
-        setFilteredData(initData);
-        setHasData(dataAvailable); // Update based on if data was found for the year
-      } catch (error) {
+
+        setHasData(dataAvailable);
+      })
+      .catch(error => {
         console.error("Failed to fetch data", error);
-        setHasData(false); // Only set to false if there is an error
-      }
-    };
-  
-    fetchData();
-  }, [selectedYear]);
+        setHasData(false);
+      });
+  }, []);
+
   
   
 

@@ -109,7 +109,7 @@ const handleSave = () => {
       // Only parse if there is content
       const data = text ? JSON.parse(text) : {};
       console.log("Success:", data);
-      setSaveMessage(`Data for ${selectedDate.month} ${selectedDate.year} saved.`);
+      setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
       setShowSaveMessageModal(true);
       setTimeout(() => {
         setSaveMessage("");

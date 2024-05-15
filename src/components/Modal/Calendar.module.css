@@ -79,6 +79,7 @@ h1 {
 
 @media all and (max-width:540px) {
   .content {
-    width:350px
+    width:350px;
+    z-index: 1000;
   }
 }

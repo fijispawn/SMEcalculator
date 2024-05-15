@@ -61,7 +61,7 @@ input {
   flex-grow: 1;
   width: 100%;
   padding: 10px;
-  min-width:250px;
+  min-width: 250px;
   margin-bottom: 10px;
   border: 1px solid var(--input-color);
   border-radius: 15px;
@@ -109,14 +109,15 @@ input {
 @media all and (max-width: 540px) {
   .grid__form {
     display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 330px;
-        max-height: 420px;
-        overflow: auto;
-        left: 0;
-        right: 0;
-
+    flex-direction: column;
+    align-items: center;
+    min-width: 330px;
+    max-height: 420px;
+    overflow: auto;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
   }
   input {
     max-width: 300px;
@@ -134,6 +135,7 @@ input {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 10px;
   }
 
   .tab__container {
@@ -158,11 +160,11 @@ input {
   }
 
   .chart__wrapper {
-   width: 100%;
-   overflow: auto;
+    width: 100%;
+    overflow: auto;
   }
 
-  .form__container{
+  .form__container {
     position: fixed;
     left: 0;
     right: 0;

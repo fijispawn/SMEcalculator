@@ -112,12 +112,12 @@ input {
     flex-direction: column;
     align-items: center;
     min-width: 330px;
-    max-height: 420px;
-    overflow: auto;
+    max-height: 430px;
+    overflow-y: scroll;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
   }
   input {
     max-width: 300px;

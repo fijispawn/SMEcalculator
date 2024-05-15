@@ -132,7 +132,8 @@ const handleSave = () => {
 
   return (
     <IndicatorsWrapper activeTab="overhead">
-      <div className="grid__form">
+     <div className="form__container">
+     <div className="grid__form">
         {Object.keys(formData).map((key, index) => (
           <React.Fragment key={index}>
             <div className="naming__style">{inputNames[key]}</div>
@@ -165,6 +166,7 @@ const handleSave = () => {
           initialYear={selectedDate.year}
         />
       </div>
+     </div>
       {saveMessage && <div className="save__message">{saveMessage}</div>}
       <MessageModal
         isActive={showSaveMessageModal}

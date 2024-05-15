@@ -103,7 +103,7 @@ const SignUp = () => {
             )}
           </div>
           <button  disabled={isLoading}>
-            Зарегестрироваться
+            Зарегистрироваться
           </button>
         </form>
       )}

@@ -48,7 +48,9 @@
 
 @media all and (max-width:540px) {
   .content {
-    width:350px
+    width:350px;
+    position:fixed;
+    left:2vh;
   }
 }
 

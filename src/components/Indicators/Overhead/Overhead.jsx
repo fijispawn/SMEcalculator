@@ -70,104 +70,130 @@ const Overhead = () => {
   };
 
   const monthMap = {
-  'январь': '01', 'февраль': '02', 'март': '03',
-  'апрель': '04', 'май': '05', 'июнь': '06',
-  'июль': '07', 'август': '08', 'сентябрь': '09',
-  'октябрь': '10', 'ноябрь': '11', 'декабрь': '12'
-};
+    январь: "01",
+    февраль: "02",
+    март: "03",
+    апрель: "04",
+    май: "05",
+    июнь: "06",
+    июль: "07",
+    август: "08",
+    сентябрь: "09",
+    октябрь: "10",
+    ноябрь: "11",
+    декабрь: "12",
+  };
 
-const handleSave = () => {
-  if (selectedDate.month && selectedDate.year) {
-    const numericFormData = Object.keys(formData).reduce((acc, key) => {
-      acc[key] = formData[key] ? Number(formData[key]) : 0;
-      return acc;
-    }, {});
+  const handleSave = () => {
+    if (selectedDate.month && selectedDate.year) {
+      const numericFormData = Object.keys(formData).reduce((acc, key) => {
+        acc[key] = formData[key] ? Number(formData[key]) : 0;
+        return acc;
+      }, {});
 
-    // Convert month name to number using the map
-    const monthNumber = monthMap[selectedDate.month.toLowerCase()];
-    const dateString = `${selectedDate.year}-${monthNumber}-01`;
-    const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid() ? dateString : "Invalid Date";
+      // Convert month name to number using the map
+      const monthNumber = monthMap[selectedDate.month.toLowerCase()];
+      const dateString = `${selectedDate.year}-${monthNumber}-01`;
+      const formattedDate = dayjs(dateString, "YYYY-MM-DD").isValid()
+        ? dateString
+        : "Invalid Date";
 
-    if (formattedDate === "Invalid Date") {
-      console.error("Invalid date formed:", dateString);
-      return;
-    }
-
-    const saveData = {
-      ...numericFormData,
-      date: formattedDate,
-    };
-
-    fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(saveData),
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Network response was not ok. Status: ${response.status}`);
+      if (formattedDate === "Invalid Date") {
+        console.error("Invalid date formed:", dateString);
+        return;
       }
-      return response.text(); // Change here: using text() to handle empty responses
-    })
-    .then(text => {
-      // Only parse if there is content
-      const data = text ? JSON.parse(text) : {};
-      console.log("Success:", data);
-      setSaveMessage(`Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`);
-      setShowSaveMessageModal(true);
-      setTimeout(() => {
-        setSaveMessage("");
-        setShowSaveMessageModal(false);
-      }, 3000);
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
-  }
-};
 
+      const saveData = {
+        ...numericFormData,
+        date: formattedDate,
+      };
 
+      fetch("https://enterpizemate.dyzoon.dev/api/analytics/save-costs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(saveData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              `Network response was not ok. Status: ${response.status}`
+            );
+          }
+          return response.text(); // Change here: using text() to handle empty responses
+        })
+        .then((text) => {
+          // Only parse if there is content
+          const data = text ? JSON.parse(text) : {};
+          console.log("Success:", data);
+          setSaveMessage(
+            `Данные за ${selectedDate.month} ${selectedDate.year} сохранены.`
+          );
+          setShowSaveMessageModal(true);
+          setTimeout(() => {
+            setSaveMessage("");
+            setShowSaveMessageModal(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  };
+
+  const handleShowModal = () => {
+    setModalActive(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalActive(false);
+  };
 
   return (
     <IndicatorsWrapper activeTab="overhead">
-     <div className="form__container">
-     <div className="grid__form">
-        {Object.keys(formData).map((key, index) => (
-          <React.Fragment key={index}>
-            <div className="naming__style">{inputNames[key]}</div>
-            <input
-              name={key}
-              placeholder="Введите значение в руб."
-              value={formData[key]}
-              onChange={handleChange}
+      <div className="form__container">
+        <div className="grid__form">
+          {Object.keys(formData).map((key, index) => (
+            <div key={index} className="input-group">
+              <label className="naming__style">{inputNames[key]}</label>
+              <input
+                name={key}
+                type="text"
+                placeholder="Введите значение в руб."
+                value={formData[key]}
+                onChange={handleChange}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="button__container">
+          <Button
+            text={`${selectedDate.month || "Календарь"} ${
+              selectedDate.year || ""
+            }`.trim()}
+            onClick={handleShowModal}
+          />
+          <Button
+            text="Сохранить"
+            onClick={handleSave}
+            disabled={!selectedDate.month || !selectedDate.year}
+          />
+        </div>
+      </div>
+      {modalActive && (
+        <div className="modal" onClick={handleCloseModal}>
+          <div className="content" onClick={(e) => e.stopPropagation()}>
+            <Calendar
+              active={modalActive}
+              setActive={setModalActive}
+              updateDate={handleChange}
+              initialMonth={selectedDate.month}
+              initialYear={selectedDate.year}
             />
-          </React.Fragment>
-        ))}
-      </div>
-      <div className="button__container">
-        <Button
-          text={`${selectedDate.month || "Календарь"} ${
-            selectedDate.year || ""
-          }`.trim()}
-          onClick={() => setModalActive(true)}
-        />
-        <Button
-          text="Сохранить"
-          onClick={handleSave}
-          disabled={!selectedDate.month || !selectedDate.year}
-        />
-        <Calendar
-          active={modalActive}
-          setActive={setModalActive}
-          updateDate={updateDate}
-          initialMonth={selectedDate.month}
-          initialYear={selectedDate.year}
-        />
-      </div>
-     </div>
-      {saveMessage && <div className="save__message">{saveMessage}</div>}
+          </div>
+        </div>
+      )}
       <MessageModal
         isActive={showSaveMessageModal}
         onClose={() => setShowSaveMessageModal(false)}

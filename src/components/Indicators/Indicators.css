@@ -61,6 +61,7 @@ input {
   flex-grow: 1;
   width: 100%;
   padding: 10px;
+  min-width:250px;
   margin-bottom: 10px;
   border: 1px solid var(--input-color);
   border-radius: 15px;
@@ -131,7 +132,6 @@ input {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 30px;
   }
 
   .tab__container {

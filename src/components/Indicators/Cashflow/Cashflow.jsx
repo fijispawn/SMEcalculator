@@ -124,20 +124,29 @@ const handleSave = () => {
 
 
 
-  return (
-    <IndicatorsWrapper activeTab="balance">
-      <div className="form__container">
-     <div className="grid__form">
+const handleShowModal = () => {
+  setModalActive(true);
+};
+
+const handleCloseModal = () => {
+  setModalActive(false);
+};
+
+return (
+  <IndicatorsWrapper activeTab="cashflow">
+    <div className="form__container">
+      <div className="grid__form">
         {Object.keys(formData).map((key, index) => (
-          <React.Fragment key={index}>
-            <div className="naming__style">{inputNames[key]}</div>
+          <div key={index} className="input-group">
+            <label className="naming__style">{inputNames[key]}</label>
             <input
               name={key}
+              type="text"
               placeholder="Введите значение в руб."
               value={formData[key]}
               onChange={handleChange}
             />
-          </React.Fragment>
+          </div>
         ))}
       </div>
       <div className="button__container">
@@ -145,31 +154,36 @@ const handleSave = () => {
           text={`${selectedDate.month || "Календарь"} ${
             selectedDate.year || ""
           }`.trim()}
-          onClick={() => setModalActive(true)}
+          onClick={handleShowModal}
         />
         <Button
           text="Сохранить"
           onClick={handleSave}
           disabled={!selectedDate.month || !selectedDate.year}
         />
-        <Calendar
-          active={modalActive}
-          setActive={setModalActive}
-          updateDate={updateDate}
-          initialMonth={selectedDate.month}
-          initialYear={selectedDate.year}
-        />
       </div>
-     </div>
-      {saveMessage && <div className="save__message">{saveMessage}</div>}
-      <MessageModal
-        isActive={showSaveMessageModal}
-        onClose={() => setShowSaveMessageModal(false)}
-      >
-        <p>{saveMessage}</p>
-      </MessageModal>
-    </IndicatorsWrapper>
-  );
+    </div>
+    {modalActive && (
+      <div className="modal" onClick={handleCloseModal}>
+        <div className="content" onClick={(e) => e.stopPropagation()}>
+          <Calendar
+            active={modalActive}
+            setActive={setModalActive}
+            updateDate={handleChange}
+            initialMonth={selectedDate.month}
+            initialYear={selectedDate.year}
+          />
+        </div>
+      </div>
+    )}
+    <MessageModal
+      isActive={showSaveMessageModal}
+      onClose={() => setShowSaveMessageModal(false)}
+    >
+      <p>{saveMessage}</p>
+    </MessageModal>
+  </IndicatorsWrapper>
+);
 };
 
 export default Cashflow;

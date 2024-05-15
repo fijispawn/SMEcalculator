@@ -138,7 +138,6 @@ input {
 
   .tab__container {
     display: flex;
-    justify-content: center;
     align-items: center;
     overflow-y: auto;
     position: fixed;

@@ -1,5 +1,5 @@
 .wrapper {
-  display: flex;  
+  display: flex;
   flex-direction: column;
   min-height: 620px;
   min-width: 800px;
@@ -16,16 +16,16 @@
   text-align: center;
 }
 
-.content{
+.content {
   flex: 1 0;
 }
 
-@media all and (max-width:540px) {
-  .wrapper{
-    background-color: transparent;  
-    min-height: 0;  
+@media all and (max-width: 540px) {
+  .wrapper {
+    min-height: 0;
+    min-width: 100px;
+    width: 350px;
     padding-bottom: 30px;
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }
-
-

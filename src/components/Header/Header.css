@@ -9,7 +9,7 @@
   gap: 40px;
   min-width: 180px;
   padding: 20px 10px 20px 10px;
-  color:var(--header-font);
+  color: var(--header-font);
 }
 
 .account__header {
@@ -26,8 +26,8 @@
   padding: 10px 20px 10px 20px;
 }
 
-.header__element{
-text-align: right;
+.header__element {
+  text-align: right;
 }
 
 .avatar__header {
@@ -37,31 +37,33 @@ text-align: right;
 
 .mobile__header {
   display: flex;
-  justify-content: center;  
-  align-items: center;      
-  position: fixed;          
-  left: 0;                  
-  right: 0;                 
-  bottom: 0;                
-  padding: 10px;           
-  z-index: 1000;           
-  gap:40px;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  z-index: 1000;
+  gap: 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
 }
 
 .mobile__header .active {
-  color: #fd7770; 
+  color: #fd7770;
 }
 
-.exit__button{
+.exit__button {
   background-color: transparent;
   transition: 0.1s ease-in;
   color: var(--font-color);
   border: 1px solid var(--font-color);
 }
 
-.exit__button:hover{
+.exit__button:hover {
   background-color: #fd7770;
   transition: 0.1s ease-in;
   border: 1px solid #fd7770;
-  color:#f6e9e0;
+  color: #f6e9e0;
 }

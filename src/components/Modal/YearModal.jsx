@@ -3,7 +3,7 @@ import styles from "./MonthModal.module.css";
 
 const YearModal = ({ onSelect, active, onClose }) => {
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 10 }, (_, index) => currentYear + index); 
+  const years = Array.from({ length: 10 }, (_, index) => currentYear - index); 
 
   return (
     <div

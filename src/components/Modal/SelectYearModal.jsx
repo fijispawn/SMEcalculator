@@ -5,7 +5,7 @@ import Button from "../Button/Button";
 const SelectYearModal = ({ isOpen, onClose, onSelectYear }) => {
   const [selectedYear, setSelectedYear] = useState(""); // Set initial year to an empty string
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const years = Array.from({ length: 10 }, (_, index) => new Date().getFullYear() + index);
+  const years = Array.from({ length: 10 }, (_, index) => new Date().getFullYear() - index);
 
   if (!isOpen) {
     return null;

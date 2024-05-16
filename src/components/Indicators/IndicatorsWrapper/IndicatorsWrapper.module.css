@@ -30,5 +30,6 @@
     min-height: 0;
     min-width: 100px;
     width: 350px;
+    background-color: transparent;
   }
 }

@@ -41,4 +41,7 @@ body {
     height: 100%;
     gap:20px;
   }
+  .content__container {
+    overflow: auto;
+  }
 }

@@ -7,7 +7,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   color: var(--font-color);
-  flex: 1 0;
 }
 
 .naming__style {
@@ -23,7 +22,6 @@
   width: 100%;
   display: flex;
   flex-shrink: 0;
-  padding-bottom: 60px;
   gap: 10px;
   flex-shrink: 0;
 }
@@ -73,6 +71,7 @@ input {
   gap: 10px;
   justify-content: center;
   align-items: center;
+  grid-column: span 2;
 }
 
 .save__message {

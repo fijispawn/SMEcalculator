@@ -114,7 +114,7 @@ input {
     align-items: center;
     min-width: 330px;
     max-height: 430px;
-    overflow-y: scroll;
+    overflow-y: auto;
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.1);
@@ -147,6 +147,10 @@ input {
     left: 0;
     right: 0;
     top: 0;
+  }
+
+  .chart {
+    margin-left: 150px;
   }
 
   .pdf {

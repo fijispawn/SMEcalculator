@@ -39,7 +39,7 @@ const Overhead = () => {
     rent: "Аренда помещения",
     ads: "Реклама",
     taxes: "Налоги",
-    patent: "Патент",
+    patent: "Прочие оборотные активы",
   };
 
   useEffect(() => {
@@ -150,7 +150,7 @@ const Overhead = () => {
           <div className="naming__style">{inputNames[key]}</div>
           <input
             name={key}
-            placeholder="Введите значение в руб."
+            placeholder="Введите значение в тыс. руб."
             value={formData[key]}
             onChange={handleChange}
           />

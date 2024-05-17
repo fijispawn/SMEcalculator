@@ -32,6 +32,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10%;
+  padding-top: 50px;
 }
 
 .account {
